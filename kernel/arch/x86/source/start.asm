@@ -1,6 +1,6 @@
 .intel_syntax noprefix
 .set MULTIBOOT_HEADER_MAGIC, 0x1BADB002   /* Multiboot header magic number */
-.set MULTIBOOT_HEADER_FLAGS, 0x00000003   /* Multiboot header flags */
+.set MULTIBOOT_HEADER_FLAGS, (1<<0 | 1<<1)   /* Multiboot header flags */
 .set CHECKSUM, -(MULTIBOOT_HEADER_MAGIC + MULTIBOOT_HEADER_FLAGS) /* Multiboot header checksum */
 
 /*------------------------------------------------------------------------------*/
