@@ -3,6 +3,7 @@ ASFLAGS = --32
 
 LINKER = ld
 LDFLAGS = -melf_i386
+LINK_SCRIPT = -T $(SOURCE_DIR)/linker.ld
 
 CC = gcc
 CFLAGS = -m32 -Wall -Werror -fno-exceptions -fno-builtin
@@ -22,7 +23,7 @@ BIN = $(BIN_DIR)/kernel.bin
 all: $(BIN)
 
 $(BIN): $(OBJS)
-	$(LINKER) $(LDFLAGS) $(OBJS) -o $@
+	$(LINKER) $(LDFLAGS) $(LINK_SCRIPT) $(OBJS) -o $@
 
 $(BIN_DIR)/%.o: $(SOURCE_DIR)/%.asm
 	$(AS) $(ASFLAGS) $< -o $@

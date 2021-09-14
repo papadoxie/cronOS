@@ -18,11 +18,6 @@
     .extern start_ctors, end_ctors
     .extern start_dtors, end_dtors
 
-    multiboot_header:
-        .long MULTIBOOT_HEADER_MAGIC
-        .long MULTIBOOT_HEADER_FLAGS
-        .long CHECKSUM
-    
     _start:
         mov esp, kernel_stackptr
         push eax

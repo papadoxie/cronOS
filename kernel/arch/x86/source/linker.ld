@@ -1,19 +1,17 @@
-OUTPUT_FORMAT (elf32-i386)
-OUTPUT_ARCH (i386:i386)
-ENTRY (_start)
+OUTPUT_FORMAT(elf32-i386)
+OUTPUT_ARCH(i386:i386)
+ENTRY(_start)
 
 SECTIONS
 {
-    . = 0x0100000;
+    . = 0x00100000;
 
-    .text: 
-    {
+    .text :{
         *(.multiboot)
         *(.text)
     }
 
-    .data: 
-    {
+    .data :{
         start_ctors = .;
         *(.ctor*)
         end_ctors = .;
@@ -23,26 +21,22 @@ SECTIONS
         *(.data)
     }
 
-    .rodata:
-    {
+    .rodata :{
         *(.rodata)
     }
 
-    .data:
-    {
+    .data :{
         *(.data)
     }
 
-    .bss:
-    {
+    .bss :{
         sbss = .;
         *(COMMON)
         *(.bss)
         ebss = .;
     }
 
-    /DISCARD/ :
-    {
+    /DISCARD/ :{
         *(.fini_array*)
         *(.comment)
     }
