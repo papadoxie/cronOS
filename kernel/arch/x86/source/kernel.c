@@ -4,7 +4,10 @@ void puts(const char *str);
 void kmain(void * multiboot_structure, unsigned int magicnumber)
 {
     puts("This is a test of the operating system");
-    while (1);
+    for(int i = 0; i < __INT32_MAX__; i++)
+    {
+        asm volatile("nop");
+    }
 }
 
 void puts(const char * str)
