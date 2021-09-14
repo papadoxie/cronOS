@@ -12,7 +12,7 @@ SECTIONS
         *(.text)
     }
 
-    .data ALIGN (0x1000): 
+    .data: 
     {
         start_ctors = .;
         *(.ctor*)
@@ -23,12 +23,12 @@ SECTIONS
         *(.data)
     }
 
-    .rodata ALIGN (0x1000):
+    .rodata:
     {
         *(.rodata)
     }
 
-    .data ALIGN (0x1000):
+    .data:
     {
         *(.data)
     }
