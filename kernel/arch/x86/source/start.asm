@@ -15,8 +15,8 @@
 .section .text
     .global _start, _kmain
     .extern kmain
-    /*.extern start_ctors, end_ctors
-    .extern start_dtors, end_dtors*/
+    .extern start_ctors, end_ctors
+    .extern start_dtors, end_dtors
     
     _start:
         mov esp, kernel_stackptr
