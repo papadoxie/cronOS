@@ -1,3 +1,4 @@
+typedef void (*constructor)();
 void puts(const char *str);
 
 void kmain(void * multiboot_structure, unsigned int magicnumber)
