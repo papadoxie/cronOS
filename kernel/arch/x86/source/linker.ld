@@ -1,6 +1,6 @@
 OUTPUT_FORMAT(elf32-i386)
-OUTPUT_ARCH(i386)
-ENTRY (_start)
+OUTPUT_ARCH(i386:i386)
+ENTRY(_start)
 
 SECTIONS
 {
@@ -8,6 +8,7 @@ SECTIONS
 
     .text: 
     {
+        *(.multiboot)
         *(.text)
     }
 
@@ -38,5 +39,11 @@ SECTIONS
         *(COMMON)
         *(.bss)
         ebss = .;
+    }
+
+    /DISCARD/ :
+    {
+        *(.fini_array*)
+        *(.comment)
     }
 }

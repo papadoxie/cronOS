@@ -2,10 +2,10 @@ AS = as
 ASFLAGS = --32
 
 LINKER = ld
-LDFLAGS =
+LDFLAGS = -melf_i386
 
 CC = gcc
-CFLAGS = -m32 -Wall -Werror
+CFLAGS = -m32 -Wall -Werror -fno-exceptions -fno-leading-underscore -fno-builtin
 
 SOURCE_DIR = arch/$(ARCH)/source
 INCLUDE_DIR = arch/$(ARCH)/include
