@@ -2,7 +2,7 @@
 
 Trying to write my own operating system from scratch
 
-### Directory Structure
+### Directory Structure (Will be updated as changes happen)
 <pre>
 kernel
     |_ arch
