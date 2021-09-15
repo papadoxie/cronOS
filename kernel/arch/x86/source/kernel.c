@@ -1,7 +1,9 @@
+#include "../include/types.h"
+
 typedef void (*constructor)();
 void puts(const char *str);
 
-void kmain(void *multiboot_structure, unsigned int magicnumber)
+void kmain(void *multiboot_structure, uint32_t magicnumber)
 {
     puts("--------------------This is a test of the operating system--------------------");
     while (1) 
@@ -12,7 +14,7 @@ void kmain(void *multiboot_structure, unsigned int magicnumber)
 
 void puts(const char *str)
 {
-    unsigned short *vidmem = (unsigned short *)0xb8000;
+    uint16_t *vidmem = (uint16_t *)0xb8000;
 
     for (int i = 0; str[i] != '\0'; i++)
     {
