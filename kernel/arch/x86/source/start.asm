@@ -25,15 +25,15 @@
 
     /* Call static constructors*/
     static_ctors_loop:
-        mov ebx, start_ctors    /* Get the address of the start of the list*/
+        mov ebx, start_ctors    /* Get the address of the start of the list */
         jmp .test
 
     .body:
-        call [ebx]              /* Call the constructor*/
+        call [ebx]              /* Call the constructor */
         add ebx, 4
 
     .test:
-        cmp ebx, end_ctors      /* Check if we've reached the end of the list*/
+        cmp ebx, end_ctors      /* Check if we've reached the end of the list */
         jb .body
 
     /* Call kernel main*/
@@ -41,21 +41,21 @@
 
     /* Call static destructors*/
     static_dtors_loop:
-        mov ebx, start_dtors    /* Get the address of the start of the list*/
+        mov ebx, start_dtors    /* Get the address of the start of the list */
         jmp .test02
 
         .body02:
-            call [ebx]          /* Call the destructor*/
+            call [ebx]          /* Call the destructor */
             add ebx, 4
 
         .test02:
-            cmp ebx, end_dtors  /* Check if we've reached the end of the list*/
+            cmp ebx, end_dtors  /* Check if we've reached the end of the list */
             jb .body02
 
 
-    _stop:      /* This is the end of the program*/
-        cli     /* Disable interrupts*/
-        hlt     /* Halt the CPU*/
+    _stop:      /* This is the end of the program */
+        cli     /* Disable interrupts */
+        hlt     /* Halt the CPU */
         jmp _stop
 
 /*------------------------------------------------------------------------------*/

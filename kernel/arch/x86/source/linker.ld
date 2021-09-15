@@ -25,10 +25,6 @@ SECTIONS
         *(.rodata)
     }
 
-    .data :{
-        *(.data)
-    }
-
     .bss :{
         sbss = .;
         *(COMMON)

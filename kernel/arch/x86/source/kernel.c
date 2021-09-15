@@ -1,6 +1,6 @@
 #include "../include/types.h"
 
-typedef void (*constructor)();
+
 void puts(const char *str);
 
 void kmain(void *multiboot_structure, uint32_t magicnumber)
@@ -9,7 +9,7 @@ void kmain(void *multiboot_structure, uint32_t magicnumber)
     while (1) 
     {
         asm volatile("nop");
-    }      
+    }
 }
 
 void puts(const char *str)

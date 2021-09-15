@@ -13,7 +13,7 @@ INCLUDE_DIR = arch/$(ARCH)/include
 BIN_DIR = arch/$(ARCH)/bin
 
 C_SRCS = $(wildcard $(SOURCE_DIR)/*.c)
-ASM_SRCS += $(wildcard $(SOURCE_DIR)/*.asm)
+ASM_SRCS = $(wildcard $(SOURCE_DIR)/*.asm)
 HDRS = $(wildcard $(INCLUDE_DIR)/*.h)
 OBJS = $(patsubst $(SOURCE_DIR)/%.c, $(BIN_DIR)/%.o, $(C_SRCS))
 OBJS += $(patsubst $(SOURCE_DIR)/%.asm, $(BIN_DIR)/%.o, $(ASM_SRCS))
