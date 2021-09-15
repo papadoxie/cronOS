@@ -1,16 +1,16 @@
 typedef void (*constructor)();
 void puts(const char *str);
 
-void kmain(void * multiboot_structure, unsigned int magicnumber)
+void kmain(void *multiboot_structure, unsigned int magicnumber)
 {
-    puts("This is a test of the operating system");
-    for(int i = 0; i < __INT32_MAX__; i++)
+    puts("--------------------This is a test of the operating system--------------------");
+    while (1) 
     {
         asm volatile("nop");
-    }
+    }      
 }
 
-void puts(const char * str)
+void puts(const char *str)
 {
     unsigned short *vidmem = (unsigned short *)0xb8000;
 
