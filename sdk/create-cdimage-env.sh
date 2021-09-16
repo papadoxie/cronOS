@@ -1,7 +1,7 @@
 #!/bin/bash
 
-mkdir ../kernel/$(BIN_DIR)/iso
-mkdir ../kernel/$(BIN_DIR)/iso/boot
-mkdir ../kernel/$(BIN_DIR)/iso/boot/grub
+mkdir $ISO
+mkdir $ISO/boot
+mkdir $ISO/boot/grub
 
-cp ../sdk/grub.cfg $(BIN_DIR)/iso/boot/grub/grub.cfg
+cp $SDK/grub.cfg $ISO/boot/grub/grub.cfg
