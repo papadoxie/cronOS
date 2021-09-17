@@ -20,7 +20,7 @@ userland
 </pre>
 
 ### Compilation
-The project uses a recursive make setup
+The project uses a recursive make setup  
 Kernel can be compiled separately or with the whole project
 
 + List all the supported targets  
