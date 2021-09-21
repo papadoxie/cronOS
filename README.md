@@ -34,6 +34,7 @@ Kernel can be compiled separately or with the whole project
 
 + Create a bootable iso  
 `make cdimage`
+You might need to compile grub yourself if you get missing file errors during this  
 
 + Clean up all the built files  
 `make clean`
