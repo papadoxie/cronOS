@@ -1,24 +1,16 @@
 #!/bin/bash
 
-qemu-img create c.img 2M
+dd if=/dev/zero of=$OSNAME-$VERSIONN.iso bs=1048576 count=128
 
-fdisk c.img << EOF
-x
-c
-4
-h
-16
-s
-63
-r
+fdisk $OSNAME-$VERSIONN.iso << EOF
+o
 n
 p
 1
-1
-4
-a
-1
-w
+2048
++8M
+t 1
+
 EOF
 
 fdisk -l -u c.img

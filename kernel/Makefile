@@ -1,5 +1,5 @@
-AS = as
-ASFLAGS = --32
+AS = nasm
+ASFLAGS = -f elf
 
 LINKER = ld
 LDFLAGS = -melf_i386
@@ -19,16 +19,18 @@ OBJS = $(patsubst $(SOURCE_DIR)/%.c, $(BIN_DIR)/%.o, $(C_SRCS))
 OBJS += $(patsubst $(SOURCE_DIR)/%.asm, $(BIN_DIR)/%.o, $(ASM_SRCS))
 
 BIN = $(BIN_DIR)/kernel.bin
-ISO = $(BIN_DIR)/kernel.iso
 
-all: $(BIN)
+all: $(BIN_DIR) $(BIN)
 cdimage: $(ISO)
 
 $(ISO): $(BIN)
 	cp $< ../iso/boot/kernel.bin
 
+$(BIN_DIR):
+	mkdir $(BIN_DIR)
+
 $(BIN): $(OBJS)
-	@echo "Builing Kernel Binaries..."
+	@echo "Building Kernel Binaries..."
 	$(LINKER) $(LDFLAGS) $(LINK_SCRIPT) $(OBJS) -o $@
 
 $(BIN_DIR)/%.o: $(SOURCE_DIR)/%.asm
@@ -38,4 +40,4 @@ $(BIN_DIR)/%.o: $(SOURCE_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) -r $(BIN_DIR)/*
+	$(RM) -r $(BIN_DIR)

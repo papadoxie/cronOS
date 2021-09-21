@@ -5,12 +5,14 @@ SDK_DIR = ./sdk
 KERNEL_DIR = ./kernel
 USERLAND_DIR = ./userland
 ISO_DIR = ./iso
+BIN_DIR = ./bin
+ISO = $(BIN_DIR)/$(NAME)-$(VERSION).iso
 
 help:
 	@echo "Makefile for building Operating System."
 	@echo "Usage: make [ all | cdimage | clean | help | build | run ] ARCH=[ x86 | x86_64 ]"
 
-all:
+all: $(BIN_DIR)
 	@echo "Building Kernel"
 	make -C $(KERNEL_DIR) ARCH=$(ARCH)
 	@echo "Building Kernel Done"
@@ -21,19 +23,29 @@ all:
 	make -C $(USERLAND_DIR) ARCH=$(ARCH)
 	@echo "Building Userland Done"
 
+$(BIN_DIR):
+	mkdir $(BIN_DIR)
+
 build:
 	zip -r OS-$(VERSION).zip ./
 
 cdimage: export ISO = $(ISO_DIR)
 cdimage: export SDK = $(SDK_DIR)
-cdimage:
-	@echo "Building ISO Image..."
-	sdk/create-cdimage-env.sh
-	make cdimage -C $(KERNEL_DIR) ARCH=$(ARCH)
-	grub-mkrescue -d $(ISO_DIR) -o $(NAME)-$(VERSION).iso
+cdimage: export OSNAME = $(NAME)
+cdimage: export VERSIONN = $(VERSION)
+cdimage: $(ISO)
+
+$(ISO): $(ISO_DIR)
+	@echo "Building ISO Image..."	
+	grub-mkrescue $< -o $@
 	@echo "Building ISO Image Done"
+	@echo "ISO created: $(ISO)"
 	@echo "Cleaning up..."
 	$(RM) -r $(ISO_DIR)
+
+$(ISO_DIR): all
+	sdk/create-cdimage-env.sh
+	make cdimage -C $(KERNEL_DIR) ARCH=$(ARCH)
 
 run:
 	@echo "Running Operating System..."
@@ -42,6 +54,7 @@ run:
 
 clean:
 	@echo "Cleaning up..."
+	$(RM) -r $(BIN_DIR)
 	make -C $(KERNEL_DIR) clean
 	make -C $(SDK_DIR) clean
 	make -C $(USERLAND_DIR) clean
