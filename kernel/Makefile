@@ -10,7 +10,7 @@ CFLAGS = -m32 -Wall -Werror -fno-exceptions -fno-builtin
 
 SOURCE_DIR = arch/$(ARCH)/source
 INCLUDE_DIR = arch/$(ARCH)/include
-BIN_DIR = arch/$(ARCH)/bin
+BIN_DIR = bin
 
 C_SRCS = $(wildcard $(SOURCE_DIR)/*.c)
 ASM_SRCS = $(wildcard $(SOURCE_DIR)/*.asm)

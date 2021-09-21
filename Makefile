@@ -1,5 +1,6 @@
 NAME = CustomOS
 VERSION = 0.1.0-papadoxie
+ARCH = i386 					# Default architecture
 
 SDK_DIR = ./sdk
 KERNEL_DIR = ./kernel
@@ -10,7 +11,7 @@ ISO = $(BIN_DIR)/$(NAME)-$(VERSION).iso
 
 help:
 	@echo "Makefile for building Operating System."
-	@echo "Usage: make [ all | cdimage | clean | help | build | run ] ARCH=[ x86 | x86_64 ]"
+	@echo "Usage: make [ all | cdimage | clean | help | build | run ] ARCH=[ i386 | amd64 ]"
 
 all: $(BIN_DIR)
 	@echo "Building Kernel"
@@ -47,10 +48,9 @@ $(ISO_DIR): all
 	sdk/create-cdimage-env.sh
 	make cdimage -C $(KERNEL_DIR) ARCH=$(ARCH)
 
-run:
+run: cdimage
 	@echo "Running Operating System..."
-	cd $(SDK_DIR) && sudo bash ./diskimage.sh
-	cd $(SDK_DIR) && ./qemu.sh
+	qemu-system-$(ARCH) -boot d -cdrom $(ISO) -m 512 &
 
 clean:
 	@echo "Cleaning up..."
