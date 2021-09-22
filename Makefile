@@ -1,6 +1,7 @@
 NAME = CustomOS
 VERSION = 0.1.0-papadoxie
-ARCH = i386 					# Default architecture
+# Default architecture
+ARCH = i386
 
 SDK_DIR = ./sdk
 KERNEL_DIR = ./kernel
@@ -40,17 +41,17 @@ $(ISO): $(ISO_DIR)
 	@echo "Building ISO Image..."	
 	grub-mkrescue $< -o $@
 	@echo "Building ISO Image Done"
-	@echo "ISO created: $(ISO)"
-	@echo "Cleaning up..."
+	@echo "Cleaning up temporary files..."
 	$(RM) -r $(ISO_DIR)
+	@echo "Done!"
 
 $(ISO_DIR): all
 	sdk/create-cdimage-env.sh
 	make cdimage -C $(KERNEL_DIR) ARCH=$(ARCH)
 
-run: cdimage
+run:
 	@echo "Running Operating System..."
-	qemu-system-$(ARCH) -boot d -cdrom $(ISO) -m 512 &
+	@qemu-system-$(ARCH) -boot d -cdrom $(ISO) -m 512 &
 
 clean:
 	@echo "Cleaning up..."
