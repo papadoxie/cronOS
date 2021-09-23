@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stdint.h>
+#include "../include/types.h"
 
 #ifndef __GDT_H__
 #define __GDT_H__
@@ -38,5 +38,9 @@ typedef struct __global_descriptor_table
 } GlobalDescriptorTable;
 
 void gdt_init(GlobalDescriptorTable *gdt);
+void gdt_destroy(GlobalDescriptorTable *gdt);
+
+uint16_t cs_offset(GlobalDescriptorTable *gdt);
+uint16_t ds_offset(GlobalDescriptorTable *gdt);
 
 #endif

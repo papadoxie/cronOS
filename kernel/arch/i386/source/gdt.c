@@ -14,3 +14,4 @@ void init_segment_desc(uint32_t base_addr,
     seg_desc->flags_extra = (flags_extra & 0xf);
     seg_desc->base_vhi = (base_addr & 0xff000000) >> 24;
 }
+
