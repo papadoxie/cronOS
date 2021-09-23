@@ -19,4 +19,4 @@ sdk
 userland
 </pre>
 
-### [Installation Instructions]("https://github/com/papadoxie/Operating-System/blob/main/INSTALL.md")
+### <a href="INSTALL.md">Installation Instructions</a>
