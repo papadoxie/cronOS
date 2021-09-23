@@ -18,3 +18,5 @@ kernel
 sdk
 userland
 </pre>
+
+### [Installation Instructions]("https://github/com/papadoxie/Operating-System/blob/main/INSTALL.md")
