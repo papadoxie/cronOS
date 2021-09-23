@@ -1,4 +1,5 @@
 #include "../include/gdt.h"
+#include <string.h>
 
 void init_segment_desc(uint32_t base_addr,
                        uint32_t seg_limit,
@@ -15,3 +16,7 @@ void init_segment_desc(uint32_t base_addr,
     seg_desc->base_vhi = (base_addr & 0xff000000) >> 24;
 }
 
+void gdt_init(GlobalDescriptorTable *gdt)
+{
+    init_segment_desc(0x0, 0x0, 0x0, 0x0, &gdt->null);
+}
