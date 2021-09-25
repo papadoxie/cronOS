@@ -30,7 +30,6 @@ $(BIN_DIR):
 	mkdir $(BIN_DIR)
 
 $(BIN): $(OBJS)
-	@echo "Building Kernel Binaries..."
 	$(LINKER) $(LDFLAGS) $(LINK_SCRIPT) $(OBJS) -o $@
 
 $(BIN_DIR)/%.o: $(SOURCE_DIR)/%.asm
