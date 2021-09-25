@@ -6,7 +6,8 @@
 - grub (On WSL you need to compile this from source)
 - qemu-arch-extra
 - xorriso
-- nasm
+- nasm 
+- mtools
 
 ## Compilation
 The project uses a recursive make setup  
