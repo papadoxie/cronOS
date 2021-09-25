@@ -3,6 +3,9 @@
 #ifndef __TYPES_H__
 #define __TYPES_H__
 
+// Null pointer
+#define NULL ((int) 0)
+
 // 8 bit integers
 typedef char int8_t;
 typedef unsigned char uint8_t;
