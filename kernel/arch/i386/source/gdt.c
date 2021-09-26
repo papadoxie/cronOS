@@ -1,5 +1,7 @@
 #include "../include/gdt.h"
 
+struct __global_descriptor_table gdt;
+
 void init_segment_desc(uint32_t base_addr,
                        uint32_t seg_limit,
                        uint8_t access,
@@ -15,65 +17,65 @@ void init_segment_desc(uint32_t base_addr,
     seg_desc->base_vhi = (base_addr & 0xff000000) >> 24;
 }
 
-void init_segments(struct __global_descriptor_table *gdt)
+void init_segments(void)
 {
     // Initialize Null Segment
-    init_segment_desc(NULL, NULL, NULL, NULL, &gdt->null);
+    init_segment_desc(NULL, NULL, NULL, NULL, &gdt.null);
 
     // Initialize Kernel Code Segment
     init_segment_desc(SEG_BASE_ADDR, SEG_LIMIT_CS,
                       (ACS_PRESENT | ACS_R0 | ACS_SEG | ACS_X | ACS_RW | ACS_ACCESS),
                       (FLG_GB | FLG_SB),
-                      &gdt->k_cs);
+                      &gdt.k_cs);
 
     // Initialize Kernel Data Segment
     init_segment_desc(SEG_BASE_ADDR, SEG_LIMIT_DS,
                       (ACS_PRESENT | ACS_R0 | ACS_SEG | ACS_RW | ACS_ACCESS),
                       (FLG_GB | FLG_SB),
-                      &gdt->k_ds);
+                      &gdt.k_ds);
 
     // Initialize Kernel Stack Segment
     init_segment_desc(SEG_BASE_ADDR, SEG_LIMIT_SS,
                       (ACS_PRESENT | ACS_R0 | ACS_SEG | ACS_DIRECTION | ACS_RW | ACS_ACCESS),
                       (FLG_GB | FLG_SB),
-                      &gdt->k_ss);
+                      &gdt.k_ss);
 
     // Initialize User Code Segment
     init_segment_desc(SEG_BASE_ADDR, SEG_LIMIT_CS,
                       (ACS_PRESENT | ACS_R3 | ACS_SEG | ACS_X | ACS_RW | ACS_ACCESS),
                       (FLG_GB | FLG_SB),
-                      &gdt->u_cs);
+                      &gdt.u_cs);
 
     // Initialize User Data Segment
     init_segment_desc(SEG_BASE_ADDR, SEG_LIMIT_DS,
                       (ACS_PRESENT | ACS_R3 | ACS_SEG | ACS_RW | ACS_ACCESS),
                       (FLG_GB | FLG_SB),
-                      &gdt->u_ds);
+                      &gdt.u_ds);
 
     // Initialize User Stack Segment
     init_segment_desc(SEG_BASE_ADDR, SEG_LIMIT_SS,
                       (ACS_PRESENT | ACS_R3 | ACS_SEG | ACS_DIRECTION | ACS_RW | ACS_ACCESS),
                       (FLG_GB | FLG_SB),
-                      &gdt->u_ss);
+                      &gdt.u_ss);
 
     //TODO Initialize Multitasking Task State Segment
 
     //TODO Initialize Double Fault Handling Task State Segment
 }
 
-void __gdt_init(struct __global_descriptor_table *gdt)
+void __gdt_init(void)
 {
-    init_segments(gdt);
-    gdt->gdtr.base = GDT_BASE;
-    gdt->gdtr.size = sizeof *gdt;
+    init_segments();
+    gdt.gdtr.base = GDT_BASE;
+    gdt.gdtr.size = sizeof gdt;
 
     // Copy GDT to GDT Base Address
-    kmemcpy((char *)gdt->gdtr.base, (char *)gdt, gdt->gdtr.size);
+    kmemcpy((char *)gdt.gdtr.base, (char *)&gdt, gdt.gdtr.size);
 
     // Load GDT Registry
     asm volatile("lgdt (%0)"
                  :
-                 : "p"((uint8_t *)&gdt->gdtr));
+                 : "p"((uint8_t *)&gdt.gdtr));
 
     // Load segment addresses into segment registers
     asm volatile("  movw $0x10, %ax         \n \

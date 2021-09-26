@@ -78,10 +78,10 @@ struct __global_descriptor_table
 };
 
 //* GDT Functions
-void __gdt_init(struct __global_descriptor_table *gdt);
-void __gdt_destroy(struct __global_descriptor_table *gdt);
+void __gdt_init(void);
+void __gdt_destroy(void);
 
-uint16_t __get_cs_offset(struct __global_descriptor_table *gdt);
-uint16_t __get_ds_offset(struct __global_descriptor_table *gdt);
+uint16_t __get_cs_offset(void);
+uint16_t __get_ds_offset(void);
 
 #endif //__GDT_H__
