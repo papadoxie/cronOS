@@ -1,12 +1,13 @@
 #pragma once
 
 #include "types.h"
+#include "kstdlib.h"
 
 #ifndef __GDT_H__
 #define __GDT_H__
 
 //* Segment Base and Limits
-#define SEG_BASE_ADDR 0x0           // Base Address of Segment
+#define SEG_BASE_ADDR 0x0       // Base Address of Segment
 #define SEG_LIMIT_CS 0xf0000000 // Segment Limit of Code Segment
 #define SEG_LIMIT_DS 0xf0000000 // Segment Limit of Data Segment
 #define SEG_LIMIT_SS 0x0        // Segment Limit of Stack Segment
@@ -29,6 +30,15 @@
 #define FLG_LONG 0x02 // Long Mode
 #define FLG_AVBL 0x01 // For programmer use
 
+//* GDT Registry
+struct __gdt_r
+{
+    uint32_t base; // Base Address of GDT
+    uint16_t size; // Size of GDT
+} __attribute__((packed));
+
+
+//* Segment Descriptor
 struct __segment_descriptor
 {
     uint16_t limit_lo;    // Lower 2 bytes of Segment Limit
@@ -40,11 +50,12 @@ struct __segment_descriptor
     uint8_t base_vhi;     // Highest byte of Base Address
 } __attribute__((packed));
 
-typedef struct __global_descriptor_table
-{
-    uint32_t base_addr; // Complete Base Address
-    uint16_t seg_limit; // Complete Segment Size
 
+//* Global Descriptor Table
+#define GDT_BASE 0x00000800
+
+struct __global_descriptor_table
+{
     //* Null Segment
     struct __segment_descriptor null;
 
@@ -62,13 +73,15 @@ typedef struct __global_descriptor_table
     struct __segment_descriptor m_tss;  // Multitask Handling
     struct __segment_descriptor df_tss; // Double Fault Handling
 
-} GlobalDescriptorTable;
+    //* GDT Registry Instance
+    struct __gdt_r gdtr;
+};
 
 //* GDT Functions
-void gdt_init(GlobalDescriptorTable *gdt);
-void gdt_destroy(GlobalDescriptorTable *gdt);
+void __gdt_init(struct __global_descriptor_table *gdt);
+void __gdt_destroy(struct __global_descriptor_table *gdt);
 
-uint16_t get_cs_offset(GlobalDescriptorTable *gdt); 
-uint16_t get_ds_offset(GlobalDescriptorTable *gdt);
+uint16_t __get_cs_offset(struct __global_descriptor_table *gdt);
+uint16_t __get_ds_offset(struct __global_descriptor_table *gdt);
 
 #endif //__GDT_H__
