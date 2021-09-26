@@ -6,7 +6,7 @@
 #define __GDT_H__
 
 //* Segment Base and Limits
-#define BASE_ADDR 0x0           // Base Address of Segment
+#define SEG_BASE_ADDR 0x0           // Base Address of Segment
 #define SEG_LIMIT_CS 0xf0000000 // Segment Limit of Code Segment
 #define SEG_LIMIT_DS 0xf0000000 // Segment Limit of Data Segment
 #define SEG_LIMIT_SS 0x0        // Segment Limit of Stack Segment
