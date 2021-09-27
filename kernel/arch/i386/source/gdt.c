@@ -89,7 +89,34 @@ void __gdt_init(void)
 
 }
 
-// uint16_t __get_cs_offset(struct __global_descriptor_table *gdt)
-// {
+//* Get Kernel Segment Offsets from GDT Base
+uint16_t __get_k_cs_offset(void)
+{
+    return (uint8_t *)&gdt.k_cs - (uint8_t *)&gdt;
+}
 
-// }
+uint16_t __get_k_ds_offset(void)
+{
+    return (uint8_t *)&gdt.k_ds - (uint8_t *)&gdt;
+}
+
+uint16_t __get_k_ss_offset(void)
+{
+    return (uint8_t *)&gdt.k_ss - (uint8_t *)&gdt;
+}
+
+//* Get User Segment Offsets from GDT Base
+uint16_t __get_u_cs_offset(void)
+{
+    return (uint8_t *)&gdt.u_cs - (uint8_t *)&gdt;
+}
+
+uint16_t __get_u_ds_offset(void)
+{
+    return (uint8_t *)&gdt.u_ds - (uint8_t *)&gdt;
+}
+
+uint16_t __get_u_ss_offset(void)
+{
+    return (uint8_t *)&gdt.u_ss - (uint8_t *)&gdt;
+}

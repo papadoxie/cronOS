@@ -81,7 +81,14 @@ struct __global_descriptor_table
 void __gdt_init(void);
 void __gdt_destroy(void);
 
-uint16_t __get_cs_offset(void);
-uint16_t __get_ds_offset(void);
+//* Get Kernel Segment Offsets from GDT Base
+uint16_t __get_k_cs_offset(void);
+uint16_t __get_k_ds_offset(void);
+uint16_t __get_k_ss_offset(void);
+
+//* Get User Segment Offsets from GDT Base
+uint16_t __get_u_cs_offset(void);
+uint16_t __get_u_ds_offset(void);
+uint16_t __get_u_ss_offset(void);
 
 #endif //__GDT_H__
