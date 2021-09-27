@@ -37,7 +37,6 @@ struct __gdt_r
     uint16_t size; // Size of GDT
 } __attribute__((packed));
 
-
 //* Segment Descriptor
 struct __segment_descriptor
 {
@@ -49,7 +48,6 @@ struct __segment_descriptor
     uint8_t flags : 4;    // Segment size unit and 16/32 bit
     uint8_t base_vhi;     // Highest byte of Base Address
 } __attribute__((packed));
-
 
 //* Global Descriptor Table
 #define GDT_BASE 0x00000800
