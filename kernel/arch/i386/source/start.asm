@@ -28,13 +28,13 @@ section .text
         mov ebx, start_ctors    ; Get the address of the start of the list 
         jmp .test
 
-    .body:
-        call [ebx]              ; Call the constructor 
-        add ebx, 4
+        .body:
+            call [ebx]              ; Call the constructor 
+            add ebx, 4
 
-    .test:
-        cmp ebx, end_ctors      ; Check if we've reached the end of the list 
-        jb .body
+        .test:
+            cmp ebx, end_ctors      ; Check if we've reached the end of the list 
+            jb .body
 
     ; Call kernel main
     call kmain
