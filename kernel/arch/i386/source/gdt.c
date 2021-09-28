@@ -63,6 +63,7 @@ void init_segments(void)
     //TODO Initialize Double Fault Handling Task State Segment
 }
 
+//* Construct the GDT
 void __gdt_init(void)
 {
     init_segments();
@@ -77,8 +78,8 @@ void __gdt_init(void)
                  :
                  : "p"((uint8_t *)&gdt.gdtr));
 
-    // Load segment addresses into segment registers
-    asm volatile("  movw $0x10, %ax         \n \
+    //TODO Load segment addresses into segment registers
+    /* asm volatile("  movw $0x10, %ax         \n \
                     movw %ax, %cs           \n \
                     movw %ax, %ds           \n \
                     movw %ax, %ss           \n \
@@ -86,7 +87,13 @@ void __gdt_init(void)
                     movw %ax, %gs           \n \
                     ljmp $0x08, $res_eip    \n \
                     res_eip:");
+    */
+}
 
+
+//TODO Deconstruct the GDT
+void __gdt_destroy(void)
+{
 }
 
 //* Get Kernel Segment Offsets from GDT Base
