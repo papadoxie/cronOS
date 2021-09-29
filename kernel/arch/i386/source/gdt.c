@@ -78,7 +78,7 @@ void __gdt_init(void)
                  :
                  : "p"((uint8_t *)&gdt.gdtr));
 
-    //TODO Load segment addresses into segment registers
+    //! Load segment addresses into segment registers
     /* asm volatile("  movw $0x10, %ax         \n \
                     movw %ax, %cs           \n \
                     movw %ax, %ds           \n \
