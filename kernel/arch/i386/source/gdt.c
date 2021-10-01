@@ -88,8 +88,8 @@ void __gdt_init(void)
                     ljmp $0x08, $res_eip    \n \
                     res_eip:");
     */
-}
 
+}
 
 //TODO Deconstruct the GDT
 void __gdt_destroy(void)
