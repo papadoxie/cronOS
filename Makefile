@@ -15,6 +15,8 @@ BLUE = \033[0;34m
 GREEN =\033[0;32m
 NC = \033[0m
 
+.PHONY: clean run help
+
 help:
 	@echo "Makefile for building Operating System."
 	@echo "Usage: make [ all | cdimage | clean | help | build | run ] ARCH=[ i386 | amd64 ]"

@@ -20,6 +20,8 @@ OBJS += $(patsubst $(SOURCE_DIR)/%.asm, $(BIN_DIR)/%.o, $(ASM_SRCS))
 
 BIN = $(BIN_DIR)/kernel.bin
 
+.PHONY: clean
+
 all: $(BIN_DIR) $(BIN)
 cdimage: $(ISO)
 
