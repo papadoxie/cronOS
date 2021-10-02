@@ -5,9 +5,9 @@
 __attribute__((noreturn)) void kmain(void *multiboot_structure, uint32_t magicnumber)
 {
     printk("--------------------This is a test of the operating system--------------------");
-    printk("Loading GDT...                                                                ");
+    printk("Loading GDT...");
     __gdt_init();
-    printk("GDT Loaded Successfully...                                                    ");
+    printk("GDT Loaded Successfully...");
     while (1)
         ;
 }
