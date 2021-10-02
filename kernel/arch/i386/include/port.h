@@ -7,11 +7,16 @@
 #ifndef __PORT_H__
 #define __PORT_H__
 
+//* Read Write Functions
+// Use this to write to all types of ports
 #define k_write_p(PORT, DATA) _Generic((DATA),      \
                         uint8_t: writeb_p,          \
                         uint16_t: writew_p,         \
                         uint32_t: writel_p          \
                         )(DATA)
+
+// Read Function for ports
+uint32_t __k_read_p(struct __port_b *port);
 
 //* Generic Port
 struct __port_t
@@ -40,8 +45,5 @@ struct __port_d
     struct __port_t port_definition;
     uint32_t data;
 };
-
-// Read Write Functions for 1 byte ports
-uint32_t __k_read_p(struct __port_b *port);
 
 #endif // __PORT_H__
