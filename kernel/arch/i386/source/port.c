@@ -27,46 +27,38 @@ uint8_t inl(uint16_t port_number)
     return ret;
 }
 
-uint32_t __k_read_p(struct __port_b *port)
+uint8_t readb_p(struct __port_b *port_b)
 {
-    uint32_t ret;
-    if (port->port_definition.size == 8)
-    {
-        ret = inb(port->port_definition.port_number);
-        return ret;
-    }
-
-    if (port->port_definition.size == 16)
-    {
-        ret = inw(port->port_definition.port_number);
-        return ret;
-    }
-
-    if (port->port_definition.size == 32)
-    {
-        ret = inl(port->port_definition.port_number);
-        return ret;
-    }
-    return NULL;
+    return inb(port_b->port.port_number);
 }
 
-void writeb_p(struct __port_b *port, uint8_t data)
+uint16_t readw_p(struct __port_w *port_w)
+{
+    return inw(port_w->port.port_number);
+}
+
+uint32_t readl_p(struct __port_d *port_d)
+{
+    return inl(port_d->port.port_number);
+}
+
+void writeb_p(struct __port_b *port_b, uint8_t data)
 {
     asm volatile("outb %0, %1"
                  :
-                 : "a"(data), "Nd"(port->port_definition.port_number));
+                 : "a"(data), "Nd"(port_b->port.port_number));
 }
 
-void writew_p(struct __port_b *port, uint16_t data)
+void writew_p(struct __port_w *port_w, uint16_t data)
 {
     asm volatile("outw %0, %1"
                  :
-                 : "a"(data), "Nd"(port->port_definition.port_number));
+                 : "a"(data), "Nd"(port_w->port.port_number));
 }
 
-void writel_p(struct __port_b *port, uint32_t data)
+void writel_p(struct __port_d *port_d, uint32_t data)
 {
     asm volatile("outl %0, %1"
                  :
-                 : "a"(data), "Nd"(port->port_definition.port_number));
+                 : "a"(data), "Nd"(port_d->port.port_number));
 }
