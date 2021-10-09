@@ -6,7 +6,7 @@ LDFLAGS = -melf_i386
 LINK_SCRIPT = -T $(SOURCE_DIR)/linker.ld
 
 CC = gcc
-CFLAGS = -m32 -Wall -Werror -fno-exceptions -fno-builtin
+CFLAGS = -m32 -Wall -Werror -fno-exceptions -fno-builtin -ffreestanding
 
 SOURCE_DIR = arch/$(ARCH)/source
 INCLUDE_DIR = arch/$(ARCH)/include
