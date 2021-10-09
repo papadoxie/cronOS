@@ -1,11 +1,14 @@
 section .rodata
     MULTIBOOT_HEADER_MAGIC  equ 0x1BADB002                                          ; Multiboot header magic number
-    MULTIBOOT_HEADER_FLAGS  equ (1<<0 | 1<<1)                                       ; Multiboot header flags
+    MULTIBOOT_HEADER_ALIGN  equ 1 << 0                                              ; Alignment of multiboot header
+    MEMINFO                 equ 1 << 1                                              ; Memory map information
+    MULTIBOOT_HEADER_FLAGS  equ (MULTIBOOT_HEADER_ALIGN | MEMINFO)                  ; Multiboot header flags
     CHECKSUM                equ -(MULTIBOOT_HEADER_MAGIC + MULTIBOOT_HEADER_FLAGS)  ; Multiboot header checksum
 
 ;------------------------------------------------------------------------------
 
 section .multiboot
+align 4
     dd MULTIBOOT_HEADER_MAGIC    
     dd MULTIBOOT_HEADER_FLAGS    
     dd CHECKSUM
@@ -61,5 +64,7 @@ section .text
 ;------------------------------------------------------------------------------
 
 section .bss
-    resw 2*1024*1024
+; Create kernel stack pointer
+align 16
+    resb 16384 ; 16KB of kernel stack
     kernel_stackptr:
