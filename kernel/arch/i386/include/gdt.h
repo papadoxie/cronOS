@@ -1,7 +1,7 @@
 #pragma once
 
-#include "types.h"
-#include "kstdlib.h"
+#include <types.h>
+#include <kstdlib.h>
 
 #ifndef __GDT_H__
 #define __GDT_H__
