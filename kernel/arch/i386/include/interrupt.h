@@ -1,8 +1,8 @@
 #pragma once
 
-#include "types.h"
-#include "port.h"
-#include "kstdio.h"
+#include <types.h>
+#include <port.h>
+#include <kstdio.h>
 
 #ifndef __INT_H__
 #define __INT_H__
