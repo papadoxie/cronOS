@@ -4,15 +4,19 @@ ASFLAGS = -f elf
 
 # Linker Settings
 LINKER = ld
-LDFLAGS = -melf_i386
+LDFLAGS = -melf_i386 -nostdlib
 LINK_SCRIPT = -T $(SOURCE_DIR)/linker.ld
 
 # C Compiler Settings
 CC = gcc
-CFLAGS ?= --ggdb
+CFLAGS ?= -ggdb
 CFLAGS := $(CFLAGS) -m32
-CFLAGS := $(CFLAGS) -Wall -Werror -Wextra -Wpedantic
+CFLAGS := $(CFLAGS) -Wall -Werror -Wextra
 CFLAGS := $(CFLAGS) -fno-exceptions -fno-builtin -ffreestanding
+
+# Kernel Libraries
+LIBK =  libk
+LIBK_BIN = $(LIBK)/bin
 
 # Directories
 SOURCE_DIR = arch/$(ARCH)/source
@@ -20,22 +24,34 @@ INCLUDE_DIR = arch/$(ARCH)/include
 BIN_DIR = bin
 
 # Files
+## Sources
 C_SRCS = $(wildcard $(SOURCE_DIR)/*.c)
 ASM_SRCS = $(wildcard $(SOURCE_DIR)/*.asm)
+## Headers
 HDRS = $(wildcard $(INCLUDE_DIR)/*.h)
-OBJS = $(patsubst $(SOURCE_DIR)/%.c, $(BIN_DIR)/%.o, $(C_SRCS))
-OBJS += $(patsubst $(SOURCE_DIR)/%.asm, $(BIN_DIR)/%.o, $(ASM_SRCS))
+## Objects
+CRTBEGIN_OBJ := $(shell $(CC) $(CFLAGS) -print-file-name=crtbegin.o)
+CRTEND_OBJ := $(shell $(CC) $(CFLAGS) -print-file-name=crtend.o)
+CRTI_OBJ = $(LIBK_BIN)/crti.o
+CRTN_OBJ = $(LIBK_BIN)/crtn.o
+OBJS := $(CRTI_OBJ) $(CRTBEGIN_OBJ)
+OBJS := $(OBJS) $(patsubst $(SOURCE_DIR)/%.c, $(BIN_DIR)/%.o, $(C_SRCS))
+OBJS := $(OBJS) $(patsubst $(SOURCE_DIR)/%.asm, $(BIN_DIR)/%.o, $(ASM_SRCS))
+OBJS := $(OBJS) $(CRTEND_OBJ) $(CRTN_OBJ)
 
 # Kernel Binary
 BIN = $(BIN_DIR)/kernel.bin
 
 # Targets
-.PHONY: clean
+.PHONY: all clean
 
-all: $(BIN_DIR) $(BIN)
+all: kernel_libs $(BIN_DIR) $(BIN)
 cdimage: $(ISO)
 
-$(ISO): $(BIN)
+kernel_libs:
+	make -C $(LIBK) ARCH=$(ARCH)
+
+$(ISO): all 
 	cp $< ../iso/boot/kernel.bin
 
 $(BIN_DIR):
@@ -51,4 +67,5 @@ $(BIN_DIR)/%.o: $(SOURCE_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
+	make clean -C $(LIBK)
 	$(RM) -r $(BIN_DIR)
