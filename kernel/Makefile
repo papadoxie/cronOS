@@ -1,25 +1,35 @@
+# Assembler Settings
 AS = nasm
 ASFLAGS = -f elf
 
+# Linker Settings
 LINKER = ld
 LDFLAGS = -melf_i386
 LINK_SCRIPT = -T $(SOURCE_DIR)/linker.ld
 
+# C Compiler Settings
 CC = gcc
-CFLAGS = -m32 -Wall -Werror -fno-exceptions -fno-builtin -ffreestanding
+CFLAGS ?= --ggdb
+CFLAGS := $(CFLAGS) -m32
+CFLAGS := $(CFLAGS) -Wall -Werror -Wextra -Wpedantic
+CFLAGS := $(CFLAGS) -fno-exceptions -fno-builtin -ffreestanding
 
+# Directories
 SOURCE_DIR = arch/$(ARCH)/source
 INCLUDE_DIR = arch/$(ARCH)/include
 BIN_DIR = bin
 
+# Files
 C_SRCS = $(wildcard $(SOURCE_DIR)/*.c)
 ASM_SRCS = $(wildcard $(SOURCE_DIR)/*.asm)
 HDRS = $(wildcard $(INCLUDE_DIR)/*.h)
 OBJS = $(patsubst $(SOURCE_DIR)/%.c, $(BIN_DIR)/%.o, $(C_SRCS))
 OBJS += $(patsubst $(SOURCE_DIR)/%.asm, $(BIN_DIR)/%.o, $(ASM_SRCS))
 
+# Kernel Binary
 BIN = $(BIN_DIR)/kernel.bin
 
+# Targets
 .PHONY: clean
 
 all: $(BIN_DIR) $(BIN)
