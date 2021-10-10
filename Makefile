@@ -6,6 +6,7 @@ ARCH = i386
 SDK_DIR = ./sdk
 KERNEL_DIR = ./kernel
 USERLAND_DIR = ./userland
+SYSROOT = ./sysroot
 ISO_DIR = ./iso
 BIN_DIR = ./bin
 ISO = $(BIN_DIR)/$(NAME)-$(VERSION).iso
