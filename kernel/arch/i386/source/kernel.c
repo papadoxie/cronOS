@@ -1,6 +1,6 @@
-#include "../include/types.h"
-#include "../include/kstdio.h"
-#include "../include/gdt.h"
+#include <types.h>
+#include <kstdio.h>
+#include <gdt.h>
 
 __attribute__((noreturn)) void kmain(void *multiboot_structure, uint32_t magicnumber)
 {
