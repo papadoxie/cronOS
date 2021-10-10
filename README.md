@@ -6,16 +6,34 @@ Trying to write my own operating system from scratch
 <pre>
 kernel
     |_ arch
-    |   |_ x86
+    |   |_ i386
     |   |   |_ bin
     |   |   |_ include
     |   |   |_ source
     |   |
-    |   |_ x86_64
+    |   |_ amd64
     |       |_ bin  
     |       |_ include
     |       |_ source
     |_ libk
+        |_ arch
+        |   |_ i386
+        |   |   |_ source
+        |   |   |_ include
+        |   |   
+        |   |_ amd64
+        |       |_ source
+        |       |_ include
+        |
+        |_ source
+        |_ include
+
+sysroot
+    |_ boot
+    |_ bin
+    |_ usr
+    |_ lib
+    |_ root
 sdk
 userland
 </pre>
