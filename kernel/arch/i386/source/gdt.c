@@ -1,4 +1,4 @@
-#include "../include/gdt.h"
+#include <gdt.h>
 
 struct __global_descriptor_table gdt;
 
