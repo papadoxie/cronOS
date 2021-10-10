@@ -1,4 +1,4 @@
-#include "../include/kstdio.h"
+#include <kstdio.h>
 
 // Shift the screen buffer up by one line
 void shift_screen_buffer_up(char *screen_buffer)
