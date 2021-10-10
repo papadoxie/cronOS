@@ -6,15 +6,16 @@ Trying to write my own operating system from scratch
 <pre>
 kernel
     |_ arch
-        |_ x86
-        |   |_ bin
-        |   |_ include
-        |   |_ source
-        |
-        |_ x86_64
-            |_ bin  
-            |_ include
-            |_ source
+    |   |_ x86
+    |   |   |_ bin
+    |   |   |_ include
+    |   |   |_ source
+    |   |
+    |   |_ x86_64
+    |       |_ bin  
+    |       |_ include
+    |       |_ source
+    |_ libk
 sdk
 userland
 </pre>
