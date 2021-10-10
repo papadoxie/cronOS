@@ -1,3 +1,13 @@
+# Kernel Libraries
+LIBK =  libk
+LIBK_HDRS = $(LIBK)/include
+LIBK_BIN = $(LIBK)/bin
+
+# Directories
+SOURCE_DIR = arch/$(ARCH)/source
+INCLUDE_DIR = arch/$(ARCH)/include
+BIN_DIR = bin
+
 # Assembler Settings
 AS = nasm
 ASFLAGS = -f elf
@@ -10,18 +20,10 @@ LINK_SCRIPT = -T $(SOURCE_DIR)/linker.ld
 # C Compiler Settings
 CC = gcc
 CFLAGS ?= -ggdb
-CFLAGS := $(CFLAGS) -m32
+CFLAGS := -I$(LIBK_HDRS) -I$(INCLUDE_DIR)
+CFLAGS := $(CFLAGS) -m32 -nostdinc
 CFLAGS := $(CFLAGS) -Wall -Werror -Wextra
 CFLAGS := $(CFLAGS) -fno-exceptions -fno-builtin -ffreestanding
-
-# Kernel Libraries
-LIBK =  libk
-LIBK_BIN = $(LIBK)/bin
-
-# Directories
-SOURCE_DIR = arch/$(ARCH)/source
-INCLUDE_DIR = arch/$(ARCH)/include
-BIN_DIR = bin
 
 # Files
 ## Sources
