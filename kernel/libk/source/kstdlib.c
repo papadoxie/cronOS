@@ -1,4 +1,4 @@
-#include "../include/kstdlib.h"
+#include <kstdlib.h>
 
 void *kmemset(char *__dest, char __src, size_t __size)
 {
