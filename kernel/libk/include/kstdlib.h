@@ -1,6 +1,6 @@
 #pragma once
 
-#include "types.h"
+#include <types.h>
 
 #ifndef __K_STD_LIB_H__
 #define __K_STD_LIB_H__
