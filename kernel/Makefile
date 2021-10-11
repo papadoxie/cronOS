@@ -22,7 +22,7 @@ CC = gcc
 CFLAGS ?= -ggdb
 CFLAGS := -I$(LIBK_HDRS) -I$(INCLUDE_DIR)
 CFLAGS := $(CFLAGS) -m32 -nostdinc
-CFLAGS := $(CFLAGS) -Wall -Werror -Wextra
+CFLAGS := $(CFLAGS) -Wall -Werror
 CFLAGS := $(CFLAGS) -fno-exceptions -fno-builtin -ffreestanding
 
 # Files
@@ -37,6 +37,9 @@ CRTEND_OBJ := $(shell $(CC) $(CFLAGS) -print-file-name=crtend.o)
 CRTI_OBJ = $(LIBK_BIN)/crti.o
 CRTN_OBJ = $(LIBK_BIN)/crtn.o
 OBJS := $(CRTI_OBJ) $(CRTBEGIN_OBJ)
+OBJS := $(OBJS) $(wildcard $(LIBK_BIN)/*.o)
+OBJS := $(filter-out $(LIBK_BIN)/crti.o, $(OBJS))
+OBJS := $(filter-out $(LIBK_BIN)/crtn.o, $(OBJS))
 OBJS := $(OBJS) $(patsubst $(SOURCE_DIR)/%.c, $(BIN_DIR)/%.o, $(C_SRCS))
 OBJS := $(OBJS) $(patsubst $(SOURCE_DIR)/%.asm, $(BIN_DIR)/%.o, $(ASM_SRCS))
 OBJS := $(OBJS) $(CRTEND_OBJ) $(CRTN_OBJ)
@@ -47,20 +50,17 @@ BIN = $(BIN_DIR)/kernel.bin
 # Targets
 .PHONY: all clean
 
-all: kernel_libs $(BIN_DIR) $(BIN)
+all: $(BIN_DIR) $(BIN)
 cdimage: $(ISO)
 
-kernel_libs:
-	make -C $(LIBK) ARCH=$(ARCH)
-
-$(ISO): all 
+$(ISO): $(BIN) 
 	cp $< ../iso/boot/kernel.bin
 
 $(BIN_DIR):
 	mkdir $(BIN_DIR)
 
 $(BIN): $(OBJS)
-	$(LINKER) $(LDFLAGS) $(LINK_SCRIPT) $(OBJS) -o $@
+	$(LINKER) $(LDFLAGS) $(LINK_SCRIPT) $^ -o $@
 
 $(BIN_DIR)/%.o: $(SOURCE_DIR)/%.asm
 	$(AS) $(ASFLAGS) $< -o $@
