@@ -67,5 +67,4 @@ $(BIN_DIR)/%.o: $(SOURCE_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	make clean -C $(LIBK)
 	$(RM) -r $(BIN_DIR)
