@@ -36,8 +36,9 @@ CRTBEGIN_OBJ := $(shell $(CC) $(CFLAGS) -print-file-name=crtbegin.o)
 CRTEND_OBJ := $(shell $(CC) $(CFLAGS) -print-file-name=crtend.o)
 CRTI_OBJ = $(LIBK_BIN)/crti.o
 CRTN_OBJ = $(LIBK_BIN)/crtn.o
+### Objects must be linked in this exact order
 OBJS := $(CRTI_OBJ) $(CRTBEGIN_OBJ)
-OBJS := $(OBJS) $(wildcard $(LIBK_BIN)/*.o)
+OBJS := $(OBJS) $(filter-out $(CRTN_OBJ), $(wildcard $(LIBK_BIN)/*.o))
 OBJS := $(OBJS) $(patsubst $(SOURCE_DIR)/%.c, $(BIN_DIR)/%.o, $(C_SRCS))
 OBJS := $(OBJS) $(patsubst $(SOURCE_DIR)/%.asm, $(BIN_DIR)/%.o, $(ASM_SRCS))
 OBJS := $(OBJS) $(CRTEND_OBJ) $(CRTN_OBJ)
