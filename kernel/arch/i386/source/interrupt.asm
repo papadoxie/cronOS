@@ -7,20 +7,20 @@ section .data
 section .text
     extern __handle_interrupt
 
-    %macro exception_handler number
-        global exception_handler_$number
-        mov $number, BYTE [interrupt_number]
-        jmp int_bottom
-    %endmacro
+    ; %macro exception_handler number
+    ;     global exception_handler_$number
+    ;     mov $number, BYTE [interrupt_number]
+    ;     jmp int_bottom
+    ; %endmacro
 
-    %macro ireq_handler number
-        global __ireq_handler_$number
-        mov $number, BYTE [interrupt_number]
-        jmp int_bottom
-    %endmacro
+    ; %macro ireq_handler number
+    ;     global __ireq_handler_$number
+    ;     mov $number, BYTE [interrupt_number]
+    ;     jmp int_bottom
+    ; %endmacro
 
-    ireq_handler 0x00
-    ireq_handler 0x01
+    ; ireq_handler 0x00
+    ; ireq_handler 0x01
 
     int_bottom:
         pusha
@@ -30,8 +30,10 @@ section .text
         push gs
 
         push esp
-        push BYTE [interrupt_number]
-        call __handle_interrupt
+        xor eax, eax
+        mov al , BYTE [interrupt_number]
+        push eax
+        ;call __handle_interrupt
         mov esp, eax
 
         pop gs
