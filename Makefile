@@ -3,12 +3,13 @@ VERSION = 0.1.0-papadoxie
 # Default architecture
 ARCH = i386
 
-SDK_DIR = ./sdk
-KERNEL_DIR = ./kernel
-USERLAND_DIR = ./userland
-SYSROOT = ./sysroot
-ISO_DIR = ./iso
-BIN_DIR = ./bin
+SDK_DIR = sdk
+KERNEL_DIR = kernel
+KERNEL_LIB_DIR = ${KERNEL_DIR}/libk
+USERLAND_DIR = userland
+SYSROOT = sysroot
+ISO_DIR = iso
+BIN_DIR = bin
 ISO = $(BIN_DIR)/$(NAME)-$(VERSION).iso
 
 # Colors for colored output
@@ -23,6 +24,9 @@ help:
 	@echo "Usage: make [ all | cdimage | clean | help | build | run ] ARCH=[ i386 | amd64 ]"
 
 all: $(BIN_DIR)
+	@echo -e "$(BLUE)Building Kernel Libraries...$(NC)"
+	make -C $(KERNEL_LIB_DIR) ARCH=$(ARCH)
+	@echo -e "$(GREEN)Building Kernel Libraries Done$(NC)\n"
 	@echo -e "$(BLUE)Building Kernel...$(NC)"
 	make -C $(KERNEL_DIR) ARCH=$(ARCH)
 	@echo -e "$(GREEN)Building Kernel Done$(NC)\n"
