@@ -69,6 +69,7 @@ clean:
 	@echo -e "$(BLUE)Cleaning up...$(NC)"
 	$(RM) -r $(BIN_DIR)
 	make -C $(KERNEL_DIR) clean
+	make -C $(KERNEL_LIB_DIR) clean
 	make -C $(SDK_DIR) clean
 	make -C $(USERLAND_DIR) clean
 	$(RM) -r $(ISO_DIR)
