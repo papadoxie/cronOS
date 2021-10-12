@@ -41,5 +41,5 @@ userland
 ### <a href="INSTALL.md">Installation Instructions</a>
 #### Note
 Might not compile sometimes as I work on the code  
-Depends on what Im working on before making commits
+Depends on what Im working on before making commits  
 I will make sure this doesn't happen once there is a proper release
