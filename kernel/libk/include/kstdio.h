@@ -5,14 +5,11 @@
 #ifndef __K_IO_H__
 #define __K_IO_H__
 
-// Start of the video memory
-#define VIDEO_MEMORY 0xB8000
+#define EOF -1
 
-// Screen dimensions
-#define SCREEN_WIDTH 80
-#define SCREEN_HEIGHT 25
-
-// Basic kernel print
+// Basic kernel prints
 void printk(const char *__str);
+int kprintf(const char* __restrict__ __format, ...);
+int putchar(int __char);
 
 #endif //__K_IO_H__
