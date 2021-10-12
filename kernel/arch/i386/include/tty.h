@@ -6,9 +6,9 @@
 #define __TTY_H__
 
 void tty_init(void);
-void tty_putchar(char c);
-void tty_write(const char* data, size_t size);
-void tty_writestring(const char* data);
+void tty_putchar(char __c);
+void tty_write(const char* __str, size_t __size);
+void tty_writestr(const char* __str);
 
 enum vga_color
 {
@@ -30,14 +30,14 @@ enum vga_color
     VGA_COLOR_WHITE = 15,
 };
 
-static inline uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg)
+static inline uint8_t tty_entry_color(enum vga_color fg_color, enum vga_color bg_color)
 {
-    return fg | bg << 4;
+    return fg_color | bg_color << 4;
 }
 
-static inline uint16_t vga_entry(unsigned char uc, uint8_t color)
+static inline uint16_t tty_entry(unsigned char uchar, uint8_t color)
 {
-    return (uint16_t) uc | (uint16_t) color << 8;
+    return (uint16_t) uchar | (uint16_t) color << 8;
 }
 
 #endif // __TTY_H__
