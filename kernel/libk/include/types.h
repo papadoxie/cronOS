@@ -33,7 +33,7 @@ typedef unsigned char uchar_t;
 typedef unsigned int size_t;
 
 // Boolean
-typedef enum
+typedef enum __bool_t
 {
     false = 0,
     true = !false
