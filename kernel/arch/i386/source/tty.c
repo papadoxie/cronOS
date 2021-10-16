@@ -33,7 +33,7 @@ void tty_setcolor(uint8_t color)
 }
 
 // Shift the screen buffer up by one line
-void shift_buffer_up(char *__buffer)
+static void shift_buffer_up(char *__buffer)
 {
     for (uint16_t i = 0; i < SCREEN_HEIGHT; i++)
     {
@@ -44,7 +44,7 @@ void shift_buffer_up(char *__buffer)
     }
 }
 
-void tty_putchar_at(unsigned char uchar, uint8_t color, size_t x, size_t y)
+static void tty_putchar_at(unsigned char uchar, uint8_t color, size_t x, size_t y)
 {
     const size_t index = (y * SCREEN_WIDTH) + x;
     buffer[index] = tty_entry(uchar, color);
