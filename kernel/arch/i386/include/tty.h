@@ -5,10 +5,10 @@
 #ifndef __TTY_H__
 #define __TTY_H__
 
-void tty_init(void);
-void tty_putchar(char __c);
-void tty_write(const char* __str, size_t __size);
-void tty_writestr(const char* __str);
+void __tty_init(void);
+void __tty_putchar(char __c);
+void __tty_write(const char* __str, size_t __size);
+void __tty_writestr(const char* __str);
 
 enum vga_color
 {
