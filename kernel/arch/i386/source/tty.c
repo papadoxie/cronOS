@@ -14,7 +14,7 @@ void tty_init(void)
 {
     row = 0;
     column = 0;
-    tty_color = tty_entry_color(VGA_COLOR_LIGHT_GREEN, VGA_COLOR_BLACK);
+    tty_color = tty_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
     buffer = VIDEO_MEMORY;
 
     for (size_t y = 0; y < SCREEN_HEIGHT; y++)
