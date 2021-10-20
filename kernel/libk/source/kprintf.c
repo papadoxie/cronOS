@@ -9,7 +9,7 @@ static bool_t print(const char *str, size_t len)
 
     for (size_t i = 0; i < len; i++)
     {
-        if (putchar(bytes[i]) == EOF)
+        if (kputchar(bytes[i]) == EOF)
         {
             return false;
         }
