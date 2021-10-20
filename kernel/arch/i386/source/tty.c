@@ -33,7 +33,7 @@ void tty_setcolor(uint8_t color)
 }
 
 // Shift the screen buffer up by one line
-static void shift_buffer_up(char *__buffer)
+static void shift_buffer_up(uint16_t *__buffer)
 {
     for (uint16_t i = 0; i < SCREEN_HEIGHT; i++)
     {
@@ -75,5 +75,5 @@ void tty_write(const char *__str, size_t __size)
 
 void tty_writestr(const char *__str)
 {
-    tty_write(__str, strlen(__str));
+    tty_write(__str, kstrlen(__str));
 }
