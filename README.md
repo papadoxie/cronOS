@@ -2,6 +2,8 @@
 
 Trying to write my own operating system from scratch
 
+Current Status: Compiles ✔️  
+
 ### Directory Structure (Will be updated as changes happen)
 <pre>
 kernel
