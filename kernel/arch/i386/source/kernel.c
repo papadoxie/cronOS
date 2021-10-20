@@ -4,10 +4,10 @@
 
 __attribute__((noreturn)) void kmain(void *multiboot_structure, uint32_t magicnumber)
 {
-    printk("--------------------This is a test of the operating system--------------------");
-    printk("Loading GDT...");
+    kprintf("--------------------This is a test of the operating system--------------------");
+    kprintf("Loading GDT...");
     __gdt_init();
-    printk("GDT Loaded Successfully...");
+    kprintf("GDT Loaded Successfully...");
     while (1)
         ;
 }
