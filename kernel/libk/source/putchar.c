@@ -1,9 +1,9 @@
 #include <tty.h>
 #include <kstdio.h>
 
-int putchar(int __char)
+int kputchar(int __char)
 {
     char c = __char;
-    tty_write(&c, sizeof c);
+    __tty_write(&c, sizeof c);
     return __char;
 }
