@@ -53,8 +53,12 @@ static void tty_putchar_at(unsigned char uchar, uint8_t color, size_t x, size_t 
 void tty_putchar(char __c)
 {
     unsigned char uchar = __c;
-    tty_putchar_at(uchar, tty_color, column, row);
-    if(++column ==  SCREEN_WIDTH)
+    if(!(__c == '\n'))
+    {
+        tty_putchar_at(uchar, tty_color, column, row);
+    }
+
+    if(++column ==  SCREEN_WIDTH || __c == '\n')
     {
         column = 0;
         if(++row == SCREEN_HEIGHT)
