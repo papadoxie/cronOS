@@ -23,7 +23,7 @@ CFLAGS ?= -ggdb
 CFLAGS := -I$(LIBK_HDRS) -I$(INCLUDE_DIR)
 CFLAGS := $(CFLAGS) -m32 -nostdinc
 CFLAGS := $(CFLAGS) -Wall -Werror
-CFLAGS := $(CFLAGS) -fno-exceptions -fno-builtin -ffreestanding
+CFLAGS := $(CFLAGS) -fno-exceptions -fno-builtin -ffreestanding -fno-stack-protector
 
 # Files
 ## Sources
