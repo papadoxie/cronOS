@@ -3,6 +3,7 @@ SOURCE_DIR = source
 INCLUDE_DIR = include
 ARCH_SOURCE = arch/$(ARCH)/source
 ARCH_INCLUDE = arch/$(ARCH)/include
+KERNEL_INCLUDE = ../arch/$(ARCH)/include
 BIN_DIR = bin
 
 # Assembler Settings
@@ -17,10 +18,10 @@ LINK_SCRIPT = -T $(SOURCE_DIR)/linker.ld
 # C Compiler Settings
 CC = gcc
 CFLAGS ?= -ggdb
-CFLAGS := -I$(INCLUDE_DIR)
+CFLAGS := -I$(INCLUDE_DIR) -I$(KERNEL_INCLUDE)
 CFLAGS := $(CFLAGS) -m32
 CFLAGS := $(CFLAGS) -Wall -Werror -Wextra
-CFLAGS := $(CFLAGS) -fno-exceptions -fno-builtin -ffreestanding
+CFLAGS := $(CFLAGS) -fno-exceptions -fno-builtin -ffreestanding -fno-stack-protector
 
 # Files
 ## Sources
