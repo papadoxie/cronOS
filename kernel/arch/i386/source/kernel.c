@@ -10,6 +10,10 @@ __attribute__((noreturn)) void kmain(void *multiboot_structure, uint32_t magicnu
     kprintf("Loading GDT...\n");
     __gdt_init();
     kprintf("GDT Loaded Successfully...\n");
-    while (1)
-        ;
+    
+
+
+    // Never return
+    end:
+    goto end;
 }
