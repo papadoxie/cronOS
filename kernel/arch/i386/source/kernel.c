@@ -10,6 +10,7 @@ __attribute__((noreturn)) void kmain(void *multiboot_structure, uint32_t magicnu
     kprintf("--------------------This is a test of the operating system--------------------\n");
     kprintf("Loading GDT...\n");
     
+    //Initialize the GDT
     __gdt_init();
     kprintf("GDT Loaded Successfully...\n");
     
