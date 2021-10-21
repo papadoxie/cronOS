@@ -9,7 +9,7 @@ static bool_t print(const char *str, size_t len)
 
     for (size_t i = 0; i < len; i++)
     {
-        if (kputchar(bytes[i]) == EOF)
+        if (kputc(bytes[i]) == EOF)
         {
             return false;
         }
@@ -94,9 +94,24 @@ int kprintf(const char *__restrict__ __fmt_str, ...)
             }
 
             written += len;
+            break;
 
         default:
             __fmt_str = start;
+            size_t len = kstrlen(__fmt_str);
+            
+            if(remaining < len)
+            {
+                return EOVERFLOW;
+            }
+            
+            if (!print(__fmt_str, len))
+            {
+                return EIO;
+            }
+
+            written += len;
+            __fmt_str += len;
             break;
         }
         return 0;
