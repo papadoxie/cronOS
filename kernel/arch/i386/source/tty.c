@@ -69,9 +69,9 @@ void __tty_putchar(char __c)
     }
 }
 
-void __tty_write(const char *__str, size_t __size)
+void __tty_write(const char *__str, size_t __len)
 {
-    for (size_t i = 0; i < __size; i++)
+    for (size_t i = 0; i < __len; i++)
     {
         __tty_putchar(__str[i]);
     }

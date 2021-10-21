@@ -7,7 +7,7 @@
 
 void __tty_init(void);
 void __tty_putchar(char __c);
-void __tty_write(const char* __str, size_t __size);
+void __tty_write(const char* __str, size_t __len);
 void __tty_writestr(const char* __str);
 
 enum vga_color
