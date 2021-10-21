@@ -4,6 +4,6 @@
 int kputc(int __char)
 {
     char c = __char;
-    __tty_write(&c, sizeof c);
+    __tty_putchar(c);
     return __char;
 }
