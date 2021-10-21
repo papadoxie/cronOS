@@ -64,16 +64,36 @@ int kprintf(const char *__restrict__ __fmt_str, ...)
         case 'c':
             __fmt_str++;
             char c = (char)va_arg(params, int);
+            
             if (!remaining)
             {
                 return EOVERFLOW;
             }
+            
             if (!print(&c, 1))
             {
                 return EIO;
             }
+
             written++;
             break;
+
+        case 's':
+            __fmt_str++;
+            const char *s = va_arg(params, const char *);
+            size_t len = kstrlen(s);
+            
+            if (remaining < len)
+            {
+                return EOVERFLOW;
+            }
+
+            if (!print(s, len))
+            {
+                return EIO;
+            }
+
+            written += len;
 
         default:
             __fmt_str = start;
