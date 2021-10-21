@@ -12,6 +12,6 @@
 // Basic kernel prints
 void printk(const char *__str);
 int kprintf(const char *__restrict__ __fmt_str, ...);
-int kputchar(int __char);
+int kputc(int __char);
 
 #endif //__K_IO_H__
