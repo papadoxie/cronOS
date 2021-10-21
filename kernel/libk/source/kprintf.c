@@ -62,14 +62,15 @@ int kprintf(const char *__restrict__ __fmt_str, ...)
         switch (*__fmt_str)
         {
         case 'c':
+        {
             __fmt_str++;
             char c = (char)va_arg(params, int);
-            
+
             if (!remaining)
             {
                 return EOVERFLOW;
             }
-            
+
             if (!print(&c, 1))
             {
                 return EIO;
@@ -77,12 +78,14 @@ int kprintf(const char *__restrict__ __fmt_str, ...)
 
             written++;
             break;
+        }
 
         case 's':
+        {
             __fmt_str++;
             const char *s = va_arg(params, const char *);
             size_t len = kstrlen(s);
-            
+
             if (remaining < len)
             {
                 return EOVERFLOW;
@@ -95,16 +98,18 @@ int kprintf(const char *__restrict__ __fmt_str, ...)
 
             written += len;
             break;
+        }
 
         default:
+        {
             __fmt_str = start;
             size_t len = kstrlen(__fmt_str);
-            
-            if(remaining < len)
+
+            if (remaining < len)
             {
                 return EOVERFLOW;
             }
-            
+
             if (!print(__fmt_str, len))
             {
                 return EIO;
@@ -114,7 +119,7 @@ int kprintf(const char *__restrict__ __fmt_str, ...)
             __fmt_str += len;
             break;
         }
-        return 0;
+        }
     }
 
     va_end(params);
