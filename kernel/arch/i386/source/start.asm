@@ -26,7 +26,7 @@ section .text
         push eax
         push ebx
 
-    ; Call static constructors
+    ; Call static constructors (redundant after crti)
     static_ctors_loop:
         mov ebx, start_ctors    ; Get the address of the start of the list 
         jmp .test
@@ -42,7 +42,7 @@ section .text
     ; Call kernel main
     call kmain
 
-    ; Call static destructors
+    ; Call static destructors (redundant after crtn)
     static_dtors_loop:
         mov ebx, start_dtors    ; Get the address of the start of the list 
         jmp .test
