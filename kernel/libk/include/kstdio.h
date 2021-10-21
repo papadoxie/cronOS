@@ -10,7 +10,7 @@
 #define EIO -1
 
 // Basic kernel prints
-void printk(const char *__str);
+int printk(const char *__str);
 int kprintf(const char *__restrict__ __fmt_str, ...);
 int kputc(int __char);
 
