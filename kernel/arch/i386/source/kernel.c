@@ -7,14 +7,13 @@ __attribute__((noreturn)) void kmain(void *multiboot_structure, uint32_t magicnu
 {
     //Initialize the tty
     __tty_init();
-    kprintf("--------------------This is a test of the operating system--------------------\n");
-    kprintf("Loading GDT...\n");
+    printk("--------------------This is a test of the operating system--------------------");
     
     //Initialize the GDT
+    printk("Loading GDT...");
     __gdt_init();
-    kprintf("GDT Loaded Successfully...\n");
+    printk("GDT Loaded Successfully...");
     
-
 
     // Never return
     end:
