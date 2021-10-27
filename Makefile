@@ -25,16 +25,16 @@ help:
 
 all: $(BIN_DIR)
 	@echo -e "$(BLUE)Building Kernel Libraries...$(NC)"
-	make -C $(KERNEL_LIB_DIR) ARCH=$(ARCH)
+	$(MAKE) -C $(KERNEL_LIB_DIR) ARCH=$(ARCH)
 	@echo -e "$(GREEN)Building Kernel Libraries Done$(NC)\n"
 	@echo -e "$(BLUE)Building Kernel...$(NC)"
-	make -C $(KERNEL_DIR) ARCH=$(ARCH)
+	$(MAKE) -C $(KERNEL_DIR) ARCH=$(ARCH)
 	@echo -e "$(GREEN)Building Kernel Done$(NC)\n"
 	@echo -e "$(BLUE)Building SDK...$(NC)"
-	make -C $(SDK_DIR) ARCH=$(ARCH)
+	$(MAKE) -C $(SDK_DIR) ARCH=$(ARCH)
 	@echo -e "$(GREEN)Building SDK Done$(NC)\n"
 	@echo -e "$(BLUE)Building Userland...$(NC)"
-	make -C $(USERLAND_DIR) ARCH=$(ARCH)
+	$(MAKE) -C $(USERLAND_DIR) ARCH=$(ARCH)
 	@echo -e "$(GREEN)Building Userland Done$(NC)\n"
 
 $(BIN_DIR):
@@ -59,7 +59,7 @@ $(ISO): $(ISO_DIR)
 
 $(ISO_DIR): all
 	sdk/create-cdimage-env.sh
-	make cdimage -C $(KERNEL_DIR) ARCH=$(ARCH)
+	$(MAKE) cdimage -C $(KERNEL_DIR) ARCH=$(ARCH)
 
 run:
 	@echo "Running Operating System..."
@@ -68,8 +68,8 @@ run:
 clean:
 	@echo -e "$(BLUE)Cleaning up...$(NC)"
 	$(RM) -r $(BIN_DIR)
-	make -C $(KERNEL_DIR) clean
-	make -C $(KERNEL_LIB_DIR) clean
-	make -C $(SDK_DIR) clean
-	make -C $(USERLAND_DIR) clean
+	$(MAKE) -C $(KERNEL_DIR) clean
+	$(MAKE) -C $(KERNEL_LIB_DIR) clean
+	$(MAKE) -C $(SDK_DIR) clean
+	$(MAKE) -C $(USERLAND_DIR) clean
 	$(RM) -r $(ISO_DIR)
