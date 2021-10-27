@@ -6,8 +6,8 @@
 #define __K_IO_H__
 
 #define EOF -1
-#define EOVERFLOW -1
-#define EIO -1
+#define EOVERFLOW -149
+#define EIO -3006
 
 // Basic kernel prints
 int printk(const char *__str);
