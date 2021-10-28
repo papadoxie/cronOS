@@ -2,7 +2,7 @@
 
 Trying to write my own operating system from scratch
 
-Current Status: Compiles ✔️  
+Current Status: Does not Compile ❌  
 
 ### Directory Structure (Will be updated as changes happen)
 <pre>
