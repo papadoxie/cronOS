@@ -1,7 +1,6 @@
 #include <kstdio.h>
 #include <stdarg.h>
 #include <kstring.h>
-#include <stddef.h>
 
 static bool_t print(const char *str, size_t len)
 {
