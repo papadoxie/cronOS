@@ -50,10 +50,9 @@ BIN = $(BIN_DIR)/kernel.bin
 .PHONY: all clean
 
 all: $(BIN_DIR) $(BIN)
-cdimage: $(ISO)
 
-$(ISO): $(BIN) 
-	cp $< ../iso/boot/kernel.bin
+cdimage: $(BIN)
+	cp $< ../sysroot/boot/kernel.bin
 
 $(BIN_DIR):
 	mkdir $(BIN_DIR)
@@ -68,4 +67,4 @@ $(BIN_DIR)/%.o: $(SOURCE_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) -r $(BIN_DIR)
+	$(RM) -rv $(BIN_DIR)
