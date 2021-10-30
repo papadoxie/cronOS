@@ -84,4 +84,4 @@ $(BIN_DIR)/%.o: $(SOURCE_DIR)/**/%.c
 	$(CC) $(CFLAGS) -c $< -o $(BIN_DIR)/$(notdir $@)
 
 clean:
-	$(RM) -r $(BIN_DIR)
+	$(RM) -rv $(BIN_DIR)
