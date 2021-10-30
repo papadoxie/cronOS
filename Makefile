@@ -8,7 +8,6 @@ KERNEL_DIR = kernel
 KERNEL_LIB_DIR = ${KERNEL_DIR}/libk
 USERLAND_DIR = userland
 SYSROOT = sysroot
-ISO_DIR = iso
 BIN_DIR = bin
 ISO = $(BIN_DIR)/$(NAME)-$(VERSION).iso
 
@@ -17,7 +16,7 @@ BLUE = \033[0;34m
 GREEN =\033[0;32m
 NC = \033[0m
 
-.PHONY: clean run help
+.PHONY: clean run help cdimage
 
 help:
 	@echo "Makefile for building Operating System."
@@ -43,22 +42,24 @@ $(BIN_DIR):
 build:
 	zip -r OS-$(VERSION).zip ./
 
-cdimage: export ISO = $(ISO_DIR)
+cdimage: export ROOT = $(SYSROOT)
 cdimage: export SDK = $(SDK_DIR)
 cdimage: export OSNAME = $(NAME)
 cdimage: export VERSIONN = $(VERSION)
 cdimage: $(ISO)
 
-$(ISO): $(ISO_DIR)
+$(ISO): $(SYSROOT)
 	@echo -e "\n$(BLUE)Building ISO Image...$(NC)"	
 	grub-mkrescue $< -o $@
 	@echo -e "$(GREEN)Building ISO Image Done$(NC)"
 	@echo -e "$(BLUE)Cleaning up temporary files...$(NC)"
-	$(RM) -r $(ISO_DIR)
+	$(RM) -rv $(SYSROOT)
 	@echo -e "$(GREEN)Done!$(NC)"
 
-$(ISO_DIR): all
+$(SYSROOT): all
+	@echo -e "\n$(BLUE)Creating OS Directory Structure...$(NC)"
 	sdk/create-cdimage-env.sh
+	@echo -e "$(GREEN)OS Directory Structure Created$(NC)"
 	$(MAKE) cdimage -C $(KERNEL_DIR) ARCH=$(ARCH)
 
 run:
@@ -67,9 +68,9 @@ run:
 
 clean:
 	@echo -e "$(BLUE)Cleaning up...$(NC)"
-	$(RM) -r $(BIN_DIR)
+	$(RM) -rv $(BIN_DIR)
 	$(MAKE) -C $(KERNEL_DIR) clean
 	$(MAKE) -C $(KERNEL_LIB_DIR) clean
 	$(MAKE) -C $(SDK_DIR) clean
 	$(MAKE) -C $(USERLAND_DIR) clean
-	$(RM) -r $(ISO_DIR)
+	$(RM) -rv $(SYSROOT)
