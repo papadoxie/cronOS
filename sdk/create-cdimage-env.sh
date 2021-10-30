@@ -1,7 +1,23 @@
 #!/bin/bash
 
-mkdir $ISO
-mkdir $ISO/boot
-mkdir $ISO/boot/grub
+# Sysroot
+mkdir $ROOT
 
-cp $SDK/grub.cfg $ISO/boot/grub/grub.cfg
+# Top level directories
+mkdir $ROOT/bin
+mkdir $ROOT/boot
+mkdir $ROOT/lib
+mkdir $ROOT/root
+mkdir $ROOT/home
+mkdir $ROOT/usr
+
+# Boot Directory
+mkdir $ROOT/boot/grub
+cp $SDK/grub.cfg $ROOT/boot/grub/grub.cfg
+
+# USR
+mkdir $ROOT/usr/lib
+mkdir $ROOT/usr/bin
+mkdir $ROOT/usr/sbin
+mkdir $ROOT/usr/share
+mkdir $ROOT/usr/include
