@@ -66,7 +66,6 @@ $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
 $(BIN): $(OBJS)
-	@echo -e "OBJECTS = $(OBJS)\n"
 # Don't want CRT Objects in libk since they will be linked to kernel anyways
 	$(LINKER) $(LDFLAGS) $(LINK_SCRIPT) $(filter-out $(CRT_OBJS), $(OBJS)) -o $@
 # No need for seperate objects after libk.a is created
