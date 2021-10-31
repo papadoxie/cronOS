@@ -1,23 +1,23 @@
-# Kernel Libraries
+#! Kernel Libraries
 LIBK =  libk
 LIBK_HDRS = $(LIBK)/include
 LIBK_BIN = $(LIBK)/bin
 
-# Directories
+#! Directories
 SOURCE_DIR = arch/$(ARCH)/source
 INCLUDE_DIR = arch/$(ARCH)/include
 BIN_DIR = bin
 
-# Assembler Settings
+#! Assembler Settings
 AS = nasm
 ASFLAGS = -f elf
 
-# Linker Settings
+#! Linker Settings
 LINKER = ld
 LDFLAGS = -melf_i386 -nostdlib
 LINK_SCRIPT = -T $(SOURCE_DIR)/linker.ld
 
-# C Compiler Settings
+#! C Compiler Settings
 CC = gcc
 CFLAGS ?= -ggdb
 CFLAGS := $(CFLAGS) -I$(LIBK_HDRS) -I$(INCLUDE_DIR)
@@ -25,17 +25,19 @@ CFLAGS := $(CFLAGS) -m32 -nostdinc
 CFLAGS := $(CFLAGS) -Wall -Werror
 CFLAGS := $(CFLAGS) -fno-exceptions -fno-builtin -ffreestanding -fno-stack-protector
 
-# Files
-## Sources
+#! Files
+##? Sources
 C_SRCS = $(wildcard $(SOURCE_DIR)/*.c)
 ASM_SRCS = $(wildcard $(SOURCE_DIR)/*.asm)
-## Headers
-HDRS = $(wildcard $(INCLUDE_DIR)/*.h)
-## Objects
+
+##? Objects
+### C Runtime
 CRTBEGIN_OBJ := $(shell $(CC) $(CFLAGS) -print-file-name=crtbegin.o)
 CRTEND_OBJ := $(shell $(CC) $(CFLAGS) -print-file-name=crtend.o)
 CRTI_OBJ = $(LIBK_BIN)/crti.o
 CRTN_OBJ = $(LIBK_BIN)/crtn.o
+CRT_LOCAL = $(CRTI_OBJ) $(CRTN_OBJ)
+
 ### Objects must be linked in this exact order
 OBJS := $(CRTI_OBJ) $(CRTBEGIN_OBJ)
 OBJS := $(OBJS) $(LIBK_BIN)/libk.a
@@ -49,10 +51,14 @@ BIN = $(BIN_DIR)/kernel.bin
 # Targets
 .PHONY: all clean
 
-all: $(BIN_DIR) $(BIN)
+all: $(BIN_DIR) $(BIN) $(CRT_LOCAL)
 
 cdimage: $(BIN)
 	cp $< ../sysroot/boot/kernel.bin
+
+$(CRT_LOCAL):
+## Compiling the whole libk because we need it to build the kernel anyways
+	$(MAKE) -C $(LIBK) all
 
 $(BIN_DIR):
 	mkdir $(BIN_DIR)
