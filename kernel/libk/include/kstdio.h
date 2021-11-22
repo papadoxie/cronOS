@@ -1,9 +1,10 @@
 #pragma once
 
-#include <types.h>
-
 #ifndef __K_IO_H__
 #define __K_IO_H__
+
+#include <types.h>
+#include <sys/cdefs.h>
 
 #define EOF -1
 #define EOVERFLOW -149
