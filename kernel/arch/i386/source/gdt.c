@@ -85,7 +85,7 @@ void __gdt_init(void)
 
     //! Load segment addresses into segment registers
     asm volatile(".intel_syntax noprefix;"
-                 "mov ax, 0x10;"
+                 "mov eax, 0x10;"
                  "mov cs, ax;"
                  "mov ds, ax;"
                  "mov ss, ax;"
