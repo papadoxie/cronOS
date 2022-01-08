@@ -1,4 +1,4 @@
-NAME = CustomOS
+NAME = cronOS
 VERSION = 0.1.0-papadoxie
 # Default architecture
 ARCH = i386
