@@ -1,6 +1,7 @@
-## Operating System
+# cronOS
+## customizable reconfigurable opensource *nix Operating System
 
-Trying to write my own operating system from scratch
+My attempt at writing an operating system from scratch
 
 ### Current Status:   
     Build: Passed ✔️
