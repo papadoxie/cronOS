@@ -78,17 +78,22 @@ void __gdt_init(void)
                  :
                  : "p"((uint8_t *)&gdt.gdtr));
 
-    //! Load segment addresses into segment registers
-    /* asm volatile("  movw $0x10, %ax         \n \
-                    movw %ax, %cs           \n \
-                    movw %ax, %ds           \n \
-                    movw %ax, %ss           \n \
-                    movw %ax, %fs           \n \
-                    movw %ax, %gs           \n \
-                    ljmp $0x08, $res_eip    \n \
-                    res_eip:");
-    */
+    asm volatile(".intel_syntax noprefix;"
+                 "mov eax, cr0;"
+                 "or eax, 1;"
+                 "mov cr0, eax;");
 
+    //! Load segment addresses into segment registers
+    asm volatile(".intel_syntax noprefix;"
+                 "mov ax, 0x10;"
+                 "mov cs, ax;"
+                 "mov ds, ax;"
+                 "mov ss, ax;"
+                 "mov fs, ax;"
+                 "mov gs, ax;"
+                 "jmp 0x8:res_eip;"
+                 "res_eip:;"
+                 ".att_syntax;");
 }
 
 //TODO Deconstruct the GDT
