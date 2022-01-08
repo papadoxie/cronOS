@@ -64,6 +64,7 @@ $(SYSROOT): all
 
 run: export AARCH = $(ARCH)
 run: export KISO = $(ISO)
+run: export DDEBUG = $(DEBUG)
 run:
 	@echo "Running Operating System..."
 	@sdk/qemu_run.sh
