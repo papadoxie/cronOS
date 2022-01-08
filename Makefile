@@ -62,9 +62,11 @@ $(SYSROOT): all
 	@echo -e "$(GREEN)OS Directory Structure Created$(NC)"
 	$(MAKE) cdimage -C $(KERNEL_DIR) ARCH=$(ARCH)
 
+run: export AARCH = $(ARCH)
+run: export KISO = $(ISO)
 run:
 	@echo "Running Operating System..."
-	@qemu-system-$(ARCH) -boot d -cdrom $(ISO) -m 512 &
+	@sdk/qemu_run.sh
 
 clean:
 	@echo -e "$(BLUE)Cleaning up...$(NC)"
