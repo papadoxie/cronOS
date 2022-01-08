@@ -1,5 +1,5 @@
 # cronOS
-## customizable reconfigurable opensource *nix Operating System
+## Customizable and Reconfigurable Opensource *nix Operating System
 
 My attempt at writing an operating system from scratch
 
