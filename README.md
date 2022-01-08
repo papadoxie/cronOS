@@ -2,7 +2,10 @@
 
 Trying to write my own operating system from scratch
 
-Current Status: Compiles ✔️  
+### Current Status:   
+    Build: Passed ✔️
+    Operations: Triple Fault on GDT Init (Bootloop) ❌
+
 
 ### Directory Structure (Will be updated as changes happen)
 <pre>
