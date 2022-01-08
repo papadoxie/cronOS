@@ -5,6 +5,8 @@ section .rodata
     MULTIBOOT_HEADER_FLAGS  equ (MULTIBOOT_HEADER_ALIGN | MEMINFO)                  ; Multiboot header flags
     CHECKSUM                equ -(MULTIBOOT_HEADER_MAGIC + MULTIBOOT_HEADER_FLAGS)  ; Multiboot header checksum
 
+    KERNEL_SSIZE            equ 0x4000                                              ; Kernel stack size (16 KiB)
+
 ;------------------------------------------------------------------------------
 
 section .multiboot
@@ -22,13 +24,13 @@ section .text
     extern start_dtors, end_dtors
 
     _start:
-        mov esp, kernel_stackptr
-        push eax
-        push ebx
+        mov esp, kernel_stackptr    ; Set up kernel stack
+        push eax                    ; Pass the multiboot magic number to kmain
+        push ebx                    ; Pass the multiboot header to kmain
 
     ; Call static constructors (redundant after crti)
     static_ctors_loop:
-        mov ebx, start_ctors    ; Get the address of the start of the list 
+        mov ebx, start_ctors        ; Get the address of the start of the list 
         jmp .test
 
         .body:
@@ -66,5 +68,5 @@ section .text
 section .bss
 ; Create kernel stack pointer
 align 16
-    resb 16384 ; 16KB of kernel stack
+    resb KERNEL_SSIZE ; 16KiB of kernel stack
     kernel_stackptr:
