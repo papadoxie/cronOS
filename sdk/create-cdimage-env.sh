@@ -13,7 +13,14 @@ mkdir $ROOT/usr
 
 # Boot Directory
 mkdir $ROOT/boot/grub
-cp $SDK/grub.cfg $ROOT/boot/grub/grub.cfg
+
+echo -e "set timeout=0 \n\
+set default=0 \n\
+\n\
+menuentry \"$OSNAME ver $VERSIONN\" { \n\
+    multiboot /boot/kernel.bin \n\
+    boot \n\
+} \n" > $ROOT/boot/grub/grub.cfg
 
 # USR
 mkdir $ROOT/usr/lib
