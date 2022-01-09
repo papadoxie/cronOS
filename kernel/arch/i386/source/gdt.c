@@ -66,33 +66,37 @@ void init_segments(void)
 //* Construct the GDT
 void __gdt_init(void)
 {
+    struct __gdt_r *gdtr = &gdt.gdtr;
+
     init_segments();
-    gdt.gdtr.base = GDT_BASE;
-    gdt.gdtr.size = sizeof gdt;
+
+    gdtr->base = GDT_BASE;
+    gdtr->size = sizeof gdt;
 
     // Copy GDT to GDT Base Address
-    kmemcpy((char *)gdt.gdtr.base, (char *)&gdt, gdt.gdtr.size);
+    kmemcpy((char *)gdtr->base, (char *)&gdt, sizeof gdt);
 
     // Load GDT Registry
     asm volatile("lgdt (%0)"
                  :
-                 : "p"((uint8_t *)&gdt.gdtr));
+                 : "p"(gdtr));
 
     asm volatile(".intel_syntax noprefix;"
                  "mov eax, cr0;"
                  "or eax, 1;"
-                 "mov cr0, eax;");
+                 "mov cr0, eax;"
+                 "jmp 0x8:res_eip;"
+                 "res_eip:;"
+                 ".att_syntax;");
 
     //! Load segment addresses into segment registers
     asm volatile(".intel_syntax noprefix;"
                  "mov eax, 0x10;"
-                 "mov cs, ax;"
                  "mov ds, ax;"
+                 "mov es, ax;"
                  "mov ss, ax;"
                  "mov fs, ax;"
                  "mov gs, ax;"
-                 "jmp 0x8:res_eip;"
-                 "res_eip:;"
                  ".att_syntax;");
 }
 
