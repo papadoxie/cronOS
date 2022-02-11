@@ -24,7 +24,7 @@ CC = gcc
 CFLAGS ?= -ggdb
 CFLAGS := $(CFLAGS) -I$(INCLUDE_DIR) -I$(KERNEL_INCLUDE)
 CFLAGS := $(CFLAGS) -m32
-CFLAGS := $(CFLAGS) -Wall -Werror -Wextra
+CFLAGS := $(CFLAGS) -Wall -Werror -Wextra -Wpedantic
 CFLAGS := $(CFLAGS) -fno-exceptions -fno-builtin -ffreestanding -fno-stack-protector
 
 
