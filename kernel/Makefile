@@ -22,7 +22,7 @@ CC = gcc
 CFLAGS ?= -ggdb
 CFLAGS := $(CFLAGS) -I$(LIBK_HDRS) -I$(INCLUDE_DIR)
 CFLAGS := $(CFLAGS) -m32 -nostdinc
-CFLAGS := $(CFLAGS) -Wall -Werror
+CFLAGS := $(CFLAGS) -Wall -Werror -Wextra -Wpedantic
 CFLAGS := $(CFLAGS) -fno-exceptions -fno-builtin -ffreestanding -fno-stack-protector
 
 #! Files
