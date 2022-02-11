@@ -9,6 +9,10 @@ __attribute__((noreturn)) void kmain(void *multiboot_structure, uint32_t magicnu
     __tty_init();
     printk("--------------------This is a test of the operating system--------------------");
 
+    //Using arguments to suppress werror
+    kprintf("Multiboot Structure: %s\n", (uint32_t)multiboot_structure);
+    kprintf("Magic Number: %s\n", magicnumber);
+
     //Initialize the GDT
     printk("Loading GDT...");
     __gdt_init();
