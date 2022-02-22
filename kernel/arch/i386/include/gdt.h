@@ -8,8 +8,8 @@
 
 //* Segment Base and Limits
 #define SEG_BASE_ADDR 0x0       // Base Address of Segment
-#define SEG_LIMIT_CS 0xf0000000 // Segment Limit of Code Segment
-#define SEG_LIMIT_DS 0xf0000000 // Segment Limit of Data Segment
+#define SEG_LIMIT_CS 0xfffff    // Segment Limit of Code Segment
+#define SEG_LIMIT_DS 0xfffff    // Segment Limit of Data Segment
 #define SEG_LIMIT_SS 0x0        // Segment Limit of Stack Segment
 
 //* Access Bits
@@ -25,7 +25,7 @@
 #define ACS_ACCESS 0x01    // Accessed Bit
 
 //* Flags
-#define FLG_GB 0x08   // 4 KiB limit multiplier
+#define FLG_GB 0x08   // 4 KiB limit multiplier // Granularity Bit
 #define FLG_SB 0x04   // 32 bit protected mode
 #define FLG_LONG 0x02 // Long Mode
 #define FLG_AVBL 0x01 // For programmer use
