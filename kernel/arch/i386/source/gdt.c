@@ -1,6 +1,6 @@
 #include <gdt.h>
 
-struct __global_descriptor_table gdt;
+static struct __global_descriptor_table gdt;
 
 void init_segment_desc(uint32_t base_addr,
                        uint32_t seg_limit,
@@ -24,43 +24,51 @@ void init_segments(void)
 
     // Initialize Kernel Code Segment
     init_segment_desc(SEG_BASE_ADDR, SEG_LIMIT_CS,
-                      (ACS_PRESENT | ACS_R0 | ACS_SEG | ACS_X | ACS_RW | ACS_ACCESS),
+                      (ACS_PRESENT | ACS_R0 | ACS_SEG | ACS_X | ACS_RW),
                       (FLG_GB | FLG_SB),
                       &gdt.k_cs);
 
     // Initialize Kernel Data Segment
     init_segment_desc(SEG_BASE_ADDR, SEG_LIMIT_DS,
-                      (ACS_PRESENT | ACS_R0 | ACS_SEG | ACS_RW | ACS_ACCESS),
+                      (ACS_PRESENT | ACS_R0 | ACS_SEG | ACS_RW),
                       (FLG_GB | FLG_SB),
                       &gdt.k_ds);
 
     // Initialize Kernel Stack Segment
     init_segment_desc(SEG_BASE_ADDR, SEG_LIMIT_SS,
-                      (ACS_PRESENT | ACS_R0 | ACS_SEG | ACS_DIRECTION | ACS_RW | ACS_ACCESS),
+                      (ACS_PRESENT | ACS_R0 | ACS_SEG | ACS_DIRECTION | ACS_RW),
                       (FLG_GB | FLG_SB),
                       &gdt.k_ss);
 
     // Initialize User Code Segment
     init_segment_desc(SEG_BASE_ADDR, SEG_LIMIT_CS,
-                      (ACS_PRESENT | ACS_R3 | ACS_SEG | ACS_X | ACS_RW | ACS_ACCESS),
+                      (ACS_PRESENT | ACS_R3 | ACS_SEG | ACS_X | ACS_RW),
                       (FLG_GB | FLG_SB),
                       &gdt.u_cs);
 
     // Initialize User Data Segment
     init_segment_desc(SEG_BASE_ADDR, SEG_LIMIT_DS,
-                      (ACS_PRESENT | ACS_R3 | ACS_SEG | ACS_RW | ACS_ACCESS),
+                      (ACS_PRESENT | ACS_R3 | ACS_SEG | ACS_RW),
                       (FLG_GB | FLG_SB),
                       &gdt.u_ds);
 
     // Initialize User Stack Segment
     init_segment_desc(SEG_BASE_ADDR, SEG_LIMIT_SS,
-                      (ACS_PRESENT | ACS_R3 | ACS_SEG | ACS_DIRECTION | ACS_RW | ACS_ACCESS),
+                      (ACS_PRESENT | ACS_R3 | ACS_SEG | ACS_DIRECTION | ACS_RW),
                       (FLG_GB | FLG_SB),
                       &gdt.u_ss);
 
-    //TODO Initialize Multitasking Task State Segment
+    // TODO Initialize Multitasking Task State Segment
+    init_segment_desc(&gdt.m_tss, sizeof &gdt.m_tss,
+                      (ACS_PRESENT),
+                      (NULL),
+                      &gdt.m_tss);
 
-    //TODO Initialize Double Fault Handling Task State Segment
+    // TODO Initialize Double Fault Handling Task State Segment
+    init_segment_desc(&gdt.m_tss, sizeof &gdt.m_tss,
+                      (ACS_PRESENT),
+                      (NULL),
+                      &gdt.m_tss);
 }
 
 //* Construct the GDT
@@ -91,7 +99,7 @@ void __gdt_init(void)
 
     //! Load segment addresses into segment registers
     asm volatile(".intel_syntax noprefix;"
-                 "mov eax, 0x10;"
+                 "mov eax, 0x00000800;"
                  "mov ds, ax;"
                  "mov es, ax;"
                  "mov ss, ax;"
@@ -100,7 +108,7 @@ void __gdt_init(void)
                  ".att_syntax;");
 }
 
-//TODO Deconstruct the GDT
+// TODO Deconstruct the GDT
 void __gdt_destroy(void)
 {
 }
