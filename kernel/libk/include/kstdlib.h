@@ -10,5 +10,6 @@ void *kmemset(char *__restrict__ __dest, char __src, size_t __size);
 void *kmemcpy(char *__restrict__ __dest, char *__restrict__ __src, size_t __size);
 
 __attribute__((__noreturn__)) void abort(void);
+__attribute__((__noreturn__)) void kpanic(const char *msg);
 
 #endif //__K_STD_LIB_H__
