@@ -1,10 +1,10 @@
 #pragma once
 
-#include <types.h>
-#include <kstdlib.h>
-
 #ifndef __GDT_H__
 #define __GDT_H__
+
+#include <types.h>
+#include <kstdlib.h>
 
 //* Segment Base and Limits
 #define SEG_BASE_ADDR 0x0       // Base Address of Segment
