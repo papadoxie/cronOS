@@ -8,6 +8,11 @@ void init_segment_desc(uint32_t base_addr,
                        uint8_t flags,
                        struct __segment_descriptor *seg_desc)
 {
+    if (seg_limit > 0xfffff)
+    {
+        kpanic("Segment limit larger than 0xFFFFF");
+    }
+
     seg_desc->limit_lo = (seg_limit & 0xffff);
     seg_desc->base_lo = (base_addr & 0xffff);
     seg_desc->base_hi = (base_addr & 0xff0000) >> 16;
@@ -59,13 +64,13 @@ void init_segments(void)
                       &gdt.u_ss);
 
     // TODO Initialize Multitasking Task State Segment
-    init_segment_desc(&gdt.m_tss, sizeof &gdt.m_tss,
+    init_segment_desc((uint32_t)&gdt.m_tss, sizeof &gdt.m_tss,
                       (ACS_PRESENT),
                       (NULL),
                       &gdt.m_tss);
 
     // TODO Initialize Double Fault Handling Task State Segment
-    init_segment_desc(&gdt.m_tss, sizeof &gdt.m_tss,
+    init_segment_desc((uint32_t)&gdt.m_tss, sizeof &gdt.m_tss,
                       (ACS_PRESENT),
                       (NULL),
                       &gdt.m_tss);
@@ -89,17 +94,25 @@ void __gdt_init(void)
                  :
                  : "p"(gdtr));
 
+    // Switch to long mode
     asm volatile(".intel_syntax noprefix;"
                  "mov eax, cr0;"
                  "or eax, 1;"
                  "mov cr0, eax;"
-                 "jmp 0x8:res_eip;"
+                 ".att_syntax;");
+
+    // Reload CS register
+    asm volatile(".intel_syntax noprefix;"
+                 "push 0x08;"
+                 "lea eax, [res_eip];"
+                 "push eax;"
+                 "retf;"
                  "res_eip:;"
                  ".att_syntax;");
 
     //! Load segment addresses into segment registers
     asm volatile(".intel_syntax noprefix;"
-                 "mov eax, 0x00000800;"
+                 "mov ax, 0x10;"
                  "mov ds, ax;"
                  "mov es, ax;"
                  "mov ss, ax;"
