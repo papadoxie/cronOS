@@ -1,11 +1,12 @@
 #! Kernel Libraries
 LIBK =  libk
-LIBK_HDRS = $(LIBK)/include
-LIBK_BIN = $(LIBK)/bin
+LIBK_HDRS := $(LIBK)/include
+LIBK_BIN := $(LIBK)/bin
+LIB_NAMES := k
 
 #! Directories
-SOURCE_DIR = arch/$(ARCH)/source
-INCLUDE_DIR = arch/$(ARCH)/include
+SOURCE_DIR := arch/$(ARCH)/source
+INCLUDE_DIR := arch/$(ARCH)/include
 LIB_DIRS := $(LIBK_BIN)/
 BIN_DIR = bin
 
@@ -15,8 +16,11 @@ ASFLAGS = -f elf
 
 #! Linker Settings
 LINKER = ld
-LDFLAGS = -melf_i386 -nostdlib -static
-LINK_SCRIPT = -T $(SOURCE_DIR)/linker.ld
+LINK_DIRS := $(foreach libdir, $(LIB_DIRS), $(addprefix -L, $(libdir)))
+LINK_ARCHIVES := $(foreach libdir, $(LIB_NAMES), $(addprefix -l, $(libdir)))
+LDFLAGS := -melf_i386 -nostdlib -static 
+LDPATH := $(LINK_DIRS) $(LINK_ARCHIVES)
+LINK_SCRIPT := -T $(SOURCE_DIR)/linker.ld
 
 #! C Compiler Settings
 CC = gcc
@@ -65,7 +69,7 @@ $(BIN_DIR):
 	mkdir $(BIN_DIR)
 
 $(BIN): $(OBJS)
-	$(LINKER) $(LDFLAGS) $(LINK_SCRIPT) $^ -o $@
+	$(LINKER) $(LDFLAGS) $(LINK_SCRIPT) $^ -o $@ $(LDPATH)
 
 $(BIN_DIR)/%.o: $(SOURCE_DIR)/%.asm
 	$(AS) $(ASFLAGS) $< -o $@
