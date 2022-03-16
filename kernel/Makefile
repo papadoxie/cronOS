@@ -6,6 +6,7 @@ LIBK_BIN = $(LIBK)/bin
 #! Directories
 SOURCE_DIR = arch/$(ARCH)/source
 INCLUDE_DIR = arch/$(ARCH)/include
+LIB_DIRS := $(LIBK_BIN)/
 BIN_DIR = bin
 
 #! Assembler Settings
@@ -14,7 +15,7 @@ ASFLAGS = -f elf
 
 #! Linker Settings
 LINKER = ld
-LDFLAGS = -melf_i386 -nostdlib
+LDFLAGS = -melf_i386 -nostdlib -static
 LINK_SCRIPT = -T $(SOURCE_DIR)/linker.ld
 
 #! C Compiler Settings
