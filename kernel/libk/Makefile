@@ -29,7 +29,7 @@ CFLAGS := $(CFLAGS) -I$(INCLUDE_DIR) -I$(KERNEL_INCLUDE)
 CFLAGS := $(CFLAGS) -m32
 CFLAGS := $(CFLAGS) -Wall -Werror -Wextra -Wpedantic
 CFLAGS := $(CFLAGS) -fno-exceptions -fno-builtin -ffreestanding -fno-stack-protector
-
+CFLAGS := $(CFLAGS) -MMD -MD -MP
 
 #! Files
 ##? Sources
@@ -56,6 +56,12 @@ ASM_OBJS := $(patsubst $(SOURCE_DIR)/%.asm, $(BIN_DIR)/%.o, $(ASM_SRCS))
 ## Object Linked List
 OBJS := $(ARCH_C_OBJS) $(ARCH_ASM_OBJS) $(C_OBJS) $(ASM_OBJS)
 
+##? Headers
+HEADERS := $(wildcard $(INCLUDE_DIR)/*.h)
+##? Dependencies
+DEPS := $(patsubst $(SOURCE_DIR)/%.c, $(BIN_DIR)/%.d, $(C_SRCS))
+DEPS := $(DEPS) $(patsubst $(ARCH_SOURCE)/%.c, $(BIN_DIR)/%.d, $(ARCH_C_SRCS))
+
 
 ##? Binary
 BIN := $(BIN_DIR)/libk.a
@@ -71,8 +77,6 @@ $(BIN_DIR):
 $(BIN): $(OBJS)
 # Don't want CRT Objects in libk since they will be linked to kernel anyways
 	$(AR) $(ARFLAGS) $@ $(filter-out $(CRT_OBJS), $(OBJS))
-# No need for seperate objects after libk.a is created
-	$(RM) $(filter-out $(CRT_OBJS), $(OBJS))
 
 $(BIN_DIR)/%.o: $(ARCH_SOURCE)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
