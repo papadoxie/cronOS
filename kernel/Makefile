@@ -29,6 +29,7 @@ CFLAGS := $(CFLAGS) -I$(LIBK_HDRS) -I$(INCLUDE_DIR)
 CFLAGS := $(CFLAGS) -m32 -nostdinc
 CFLAGS := $(CFLAGS) -Wall -Werror -Wextra -Wpedantic
 CFLAGS := $(CFLAGS) -fno-exceptions -fno-builtin -ffreestanding -fno-stack-protector
+CFLAGS := $(CFLAGS) -MMD -MD -MP
 
 #! Files
 ##? Sources
@@ -49,6 +50,11 @@ OBJS := $(OBJS) $(LIBK_BIN)/libk.a
 OBJS := $(OBJS) $(patsubst $(SOURCE_DIR)/%.c, $(BIN_DIR)/%.o, $(C_SRCS))
 OBJS := $(OBJS) $(patsubst $(SOURCE_DIR)/%.asm, $(BIN_DIR)/%.o, $(ASM_SRCS))
 OBJS := $(OBJS) $(CRTEND_OBJ) $(CRTN_OBJ)
+
+##? Headers
+HEADERS := $(wildcard $(INCLUDE_DIR)/*.h)
+##? Dependencies
+DEPS := $(patsubst $(SOURCE_DIR)/%.c, $(BIN_DIR)/%.d, $(C_SRCS))
 
 # Kernel Binary
 BIN = $(BIN_DIR)/kernel.bin
