@@ -7,5 +7,6 @@
 #include <sys/cdefs.h>
 
 size_t kstrlen(const char *__str);
+char * kitoa(unsigned int integer);
 
 #endif // __K_STR_H__
