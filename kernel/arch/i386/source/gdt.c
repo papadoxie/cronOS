@@ -95,30 +95,30 @@ void __gdt_init(void)
                  : "p"(gdtr));
 
     // Switch to long mode
-    asm volatile(".intel_syntax noprefix;"
-                 "mov eax, cr0;"
-                 "or eax, 1;"
-                 "mov cr0, eax;"
-                 ".att_syntax;");
+    // asm volatile(".intel_syntax noprefix;"
+    //              "mov eax, cr0;"
+    //              "or eax, 1;"
+    //              "mov cr0, eax;"
+    //              ".att_syntax;");
 
     // Reload CS register
-    asm volatile(".intel_syntax noprefix;"
-                 "push 0x08;"
-                 "lea eax, [res_eip];"
-                 "push eax;"
-                 "retf;"
-                 "res_eip:;"
-                 ".att_syntax;");
+    // asm volatile(".intel_syntax noprefix;"
+    //              "push 0x08;"
+    //              "lea eax, [res_eip];"
+    //              "push eax;"
+    //              "jmp 0x08:res_eip;"
+    //              "res_eip:;"
+    //              ".att_syntax;");
 
-    //! Load segment addresses into segment registers
-    asm volatile(".intel_syntax noprefix;"
-                 "mov ax, 0x10;"
-                 "mov ds, ax;"
-                 "mov es, ax;"
-                 "mov ss, ax;"
-                 "mov fs, ax;"
-                 "mov gs, ax;"
-                 ".att_syntax;");
+    // //! Load segment addresses into segment registers
+    // asm volatile(".intel_syntax noprefix;"
+    //              "mov ax, 0x18;"
+    //              "mov ds, ax;"
+    //              "mov es, ax;"
+    //              "mov ss, ax;"
+    //              "mov fs, ax;"
+    //              "mov gs, ax;"
+    //              ".att_syntax;");
 }
 
 // TODO Deconstruct the GDT
